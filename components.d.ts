@@ -9,7 +9,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElFooter: typeof import('element-plus/es')['ElFooter']
+    ElLink: typeof import('element-plus/es')['ElLink']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    Guahao_bottom: typeof import('./src/components/guahao_bottom/index.vue')['default']
     Guahao_top: typeof import('./src/components/guahao_top/index.vue')['default']
   }
 }

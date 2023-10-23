@@ -1,8 +1,10 @@
 <template>
   <div class="container">
     <GuahaoTop></GuahaoTop>
-    <div class="content">hahah</div>
-    <div class="bottom">6666</div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
+    <GuahaoBottom></GuahaoBottom>
   </div>
 </template>
 
@@ -19,7 +21,6 @@
     width: 1200px;
     min-height: 700px;
     margin-top: 70px;
-    background-color: red;
   }
 }
 </style>

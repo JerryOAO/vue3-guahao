@@ -12,7 +12,8 @@
     "@types/node": "^20.8.7",
     "element-plus": "^2.4.1",
     "sass": "^1.69.4",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
