@@ -26,7 +26,7 @@ import Carousel from './carousel/index.vue'
 import Search from './search/index.vue'
 import level from './level/index.vue'
 import Region from './region/index.vue'
-import Card from './Card/index.vue'
+import Card from './card/index.vue'
 </script>
 
 <style scoped lang="scss">
