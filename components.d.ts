@@ -7,13 +7,24 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel']
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElFooter: typeof import('element-plus/es')['ElFooter']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElLink: typeof import('element-plus/es')['ElLink']
+    ElRo: typeof import('element-plus/es')['ElRo']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Guahao_bottom: typeof import('./src/components/guahao_bottom/index.vue')['default']
     Guahao_top: typeof import('./src/components/guahao_top/index.vue')['default']
+    IconEpAim: typeof import('~icons/ep/aim')['default']
+    IconEpSearch: typeof import('~icons/ep/search')['default']
+    IEpSearch: typeof import('~icons/ep/search')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
