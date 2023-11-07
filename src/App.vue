@@ -8,16 +8,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .content{
+  .content {
     width: 1200px;
     min-height: 700px;
     margin-top: 70px;

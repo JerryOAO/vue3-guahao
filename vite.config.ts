@@ -39,5 +39,16 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  server: {
+    //配置跨域代理
+    proxy: {
+      '/api': {
+        target: 'http://syt.atguigu.cn',
+        changeOrigin: true
+        // rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   }
+
 })

@@ -3,9 +3,18 @@
     <div class="content">
       <div class="left">
         全国预约挂号平台 ©2023 Created by
-        <el-tooltip content="点击跳转到 github 主页"><el-link type="primary" :underline="false"
-            href="https://github.com/JerryOAO"><img style="width: 15px" src="../../assets/imgs/github.png"
-              alt="" />杰瑞</el-link></el-tooltip>
+        <el-tooltip content="点击跳转到 github 主页"
+          ><el-link
+            type="primary"
+            :underline="false"
+            href="https://github.com/JerryOAO"
+            ><img
+              style="width: 15px"
+              src="../../assets/imgs/github.png"
+              alt=""
+            />杰瑞</el-link
+          ></el-tooltip
+        >
       </div>
       <div class="right">
         <span>联系我们</span>
@@ -26,7 +35,7 @@
   background-color: #fff;
   display: flex;
   justify-content: center;
-
+  margin-top: 30px;
   .content {
     width: 1200px;
     height: 100%;
@@ -41,6 +50,5 @@
       }
     }
   }
-
 }
 </style>
