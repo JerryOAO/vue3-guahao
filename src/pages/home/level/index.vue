@@ -14,9 +14,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .level {
@@ -28,7 +26,6 @@
 
     .left {
       margin-right: 10px;
-
     }
 
     .hospitol {
@@ -39,11 +36,11 @@
         color: #767687;
 
         &.active {
-          color: #91d6ff;
+          color: #073190;
         }
 
         &:hover {
-          color: #91d6ff;
+          color: #073190;
           cursor: pointer;
         }
       }

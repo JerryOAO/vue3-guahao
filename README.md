@@ -1,1 +1,2 @@
-json-server -watch db.json -p 3002
+vite 的路径问题
+<img :src="`src/assets/images/web-banner-${item}.png`" alt="" />

@@ -12,7 +12,8 @@ import ElementPlus from 'element-plus'
 //element-plus国际化
 //@ts-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-
+// 引入字体样式
+import "@/assets/font/font.css"
 
 const app = createApp(App)
 app.use(ElementPlus, { locale: zhCn })

@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "MyFont";
   .content {
     width: 1200px;
     min-height: 700px;

@@ -10,9 +10,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .region {
@@ -36,11 +34,11 @@
         margin-bottom: 10px;
 
         &.active {
-          color: #91d6ff;
+          color: #073190;
         }
 
         &:hover {
-          color: #91d6ff;
+          color: #073190;
           cursor: pointer;
         }
       }
