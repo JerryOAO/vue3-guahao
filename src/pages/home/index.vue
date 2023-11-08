@@ -50,6 +50,7 @@ import Card from "./card/index.vue";
 import { ref, onMounted } from "vue";
 //医院列表api
 import { reqHospital } from "@/api/";
+import type { Content, hospitalResponseData } from "@/api/type";
 
 // 分页器页码
 let pageNo = ref<number>(1);
@@ -61,10 +62,13 @@ onMounted(() => {
   getHospital();
 });
 
-const hasHospitalArr = ref([]);
+const hasHospitalArr = ref<Content>([]);
 // 获取首页医院列表
 const getHospital = async () => {
-  let result: any = await reqHospital(pageNo.value, pageSize.value);
+  let result: hospitalResponseData = await reqHospital(
+    pageNo.value,
+    pageSize.value
+  );
   console.log(result);
   if (result.code === 200) {
     console.log("result.data", result.data);
