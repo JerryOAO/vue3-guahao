@@ -34,11 +34,11 @@
         margin-bottom: 10px;
 
         &.active {
-          color: #073190;
+          color: #79bbff;
         }
 
         &:hover {
-          color: #073190;
+          color: #79bbff;
           cursor: pointer;
         }
       }
