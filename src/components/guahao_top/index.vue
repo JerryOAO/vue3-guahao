@@ -2,8 +2,8 @@
   <div class="top">
     <div class="content">
       <div class="left">
-        <img src="../../assets/imgs/挂号.png" alt="logo">
-        <p style="color:rgb(37, 119, 186)">全国统一预约挂号平台</p>
+        <img src="../../assets/imgs/挂号.png" alt="logo" />
+        <p style="color: rgb(37, 119, 186)">全国统一预约挂号平台</p>
       </div>
       <div class="right">
         <p class="help">帮助中心</p>
@@ -13,9 +13,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .top {
@@ -39,16 +37,17 @@
       align-items: center;
       img {
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
+        width: 35px;
+        height: 35px;
+        margin-bottom: 10px;
+        margin-right: 5px;
       }
-      p{
+      p {
         font-size: 20px;
         font-weight: bold;
       }
     }
-    .right{
+    .right {
       display: flex;
       justify-content: center;
       align-items: center;

@@ -69,3 +69,5 @@ export interface hospitalResponseData extends ResponseData {
     empty: boolean;
   }
 }
+
+export interface reqHospitalLevelAndRegion
