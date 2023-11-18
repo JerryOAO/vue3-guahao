@@ -18,9 +18,10 @@ import type { HospitalLevelAndRegionResponseData,HospitalLevelAndRegionArr } fro
 let regionFlag = ref<string>('')
 const changeRegion = (region:string) => {
   regionFlag.value = region
-  console.log('region',region)
+  $emit('getRegion',region)
 }
 
+let $emit = defineEmits(['getRegion'])
 
 
 let regionArr = ref<HospitalLevelAndRegionArr>([])

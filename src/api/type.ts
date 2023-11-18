@@ -1,12 +1,3 @@
-/*
- * @Author: 1107965666@qq.com
- * @Date: 2023-11-08 02:15:00
- * @LastEditors: Jerry 1107965666@qq.com
- * @LastEditTime: 2023-11-15 11:49:42
- * @FilePath: \vue3-guahao\src\api\type.ts
- * @Description: 这里填写描述
- */
-import { reqHospitalLevelAndRegion } from './index';
 export interface ResponseData {
   code: number;
   message: string;
@@ -96,4 +87,8 @@ export type HospitalLevelAndRegionArr = HospitalLevelAndRegion[];
 //获取等级或医院地区接口返回数据类型
 export interface HospitalLevelAndRegionResponseData extends ResponseData{
   data:HospitalLevelAndRegionArr;
+}
+
+export interface HospitalInfo extends ResponseData{
+  data:Content;
 }

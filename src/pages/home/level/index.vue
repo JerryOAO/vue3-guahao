@@ -32,8 +32,11 @@ let activeFlag = ref<string>('')
 //点击切换医院等级
 const changeLevel = (level:string) => {
   activeFlag.value = level
-  console.log('level',level)
+  //触发自定义事件：将医院等级参数传给父
+  $emit('getLevel',level)
 }
+
+let $emit = defineEmits(['getLevel'])
 </script>
 
 <style scoped lang="scss">
