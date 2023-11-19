@@ -5,7 +5,7 @@
     <!-- 搜索框 -->
     <Search />
     <h1>医院</h1>
-    <el-row :gutter="20">
+    <el-row :gutter="24">
       <el-col :span="19">
         <!-- 医院等级子组件 -->
         <level @getLevel="getLevel"/>
@@ -32,7 +32,9 @@
           @size-change="sizeChange"
         />
       </el-col>
-      <el-col :span="2">22</el-col>
+      <el-col :span="5">
+        <Tip />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -47,6 +49,8 @@ import level from "./level/index.vue";
 import Region from "./region/index.vue";
 // 首页医院结构卡片
 import Card from "./card/index.vue";
+// 引入右侧tip
+import Tip from "./tip/index.vue";
 
 import { ref, onMounted } from "vue";
 //医院列表api
