@@ -14,10 +14,12 @@ import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 // 引入字体样式
 import "@/assets/font/font.css"
+import pinia from '@/store'
 
 const app = createApp(App)
 app.use(ElementPlus, { locale: zhCn })
 app.use(router)
+app.use(pinia)
 app.component('GuahaoTop', GuahaoTop)
 app.component('GuahaoBottom', GuahaoBottom)
 app.mount('#app')

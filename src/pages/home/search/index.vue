@@ -29,13 +29,13 @@ const fetchData = async (keyword:string, cb:any) => {
 //点击推荐的医院，跳转到医院详情页面
 let router = useRouter()
 const goDetail = (item:any) => {
-  console.log(item)
+  console.log("item",item)
   //跳转到医院详情页面
   router.push({
-    path:'/hospital'
-    // query:{
-    //   hoscode:item.hoscode
-    // }
+    path:'/hospital/register',
+    query:{
+      hoscode:item.hoscode
+    }
   })
 }
 </script>

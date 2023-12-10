@@ -1,3 +1,4 @@
+import { hospital } from './type';
 export interface ResponseData {
   code: number;
   message: string;
@@ -91,4 +92,41 @@ export interface HospitalLevelAndRegionResponseData extends ResponseData{
 
 export interface HospitalInfo extends ResponseData{
   data:Content;
+}
+
+//获取医院详情接口返回数据类型
+export interface HospitalDetail{
+    bookingRule:{
+      cycle: number;
+      releaseTime: string;
+      stopTime: string;
+      quitDay: number;
+      quitTime: string;
+      rule: string[];
+    },
+    hospital:{
+      id: string;
+      createTime: string;
+      updateTime: string;
+      isDeleted: number;
+      param: {
+        hostypeString: string;
+        fullAddress: string;
+      };
+      hoscode: string;
+      hosname: string;
+      hostype: string;
+      provinceCode: string;
+      cityCode: string;
+      districtCode: string;
+      address: string;
+      logoData: string;
+      intro: string;
+      route: string;
+      status: number;
+      bookingRule?: any;
+    }
+}
+export interface HospitalDetail extends ResponseData{
+  data:HospitalDetail;
 }

@@ -13,6 +13,7 @@
     "@types/node": "^20.8.7",
     "axios": "^1.6.0",
     "element-plus": "^2.4.1",
+    "pinia": "^2.1.7",
     "sass": "^1.69.4",
     "unplugin-icons": "^0.14.1",
     "vue": "^3.3.4",
