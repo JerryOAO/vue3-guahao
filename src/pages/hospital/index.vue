@@ -6,6 +6,7 @@
       </div>
       <el-menu
         :default-active="route.path"
+        @select="onSelect"
         class="el-menu-vertical-demo"
         router
       >
@@ -39,16 +40,24 @@
 
 <script setup lang="ts">
 import { Tickets, Warning, HomeFilled, Select, Search,List } from "@element-plus/icons-vue";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import { onMounted } from "vue";
 import useDetailStore from "@/store/modules/hospitalDetail.ts"; 
 
+
+
+
 let route = useRoute();
+let router = useRouter()
+//onSelect回调时，会传入当前选中的菜单项的 index 值和query作为参数
+const onSelect = (index: string) => {
+  router.push({ path: index, query: { hoscode: route.query.hoscode } });
+};
 console.log('route',route.path)
 //
 let detailStore = useDetailStore();
 onMounted(() => {
-  detailStore.getHospital(route.query.hoscode);
+  detailStore.getHospital(route.query.hoscode as string);
 });
 
 </script>
