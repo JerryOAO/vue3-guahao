@@ -57,7 +57,10 @@ console.log('route',route.path)
 //
 let detailStore = useDetailStore();
 onMounted(() => {
+  //获取医院详情
   detailStore.getHospital(route.query.hoscode as string);
+  //获取医院科室的数据
+  detailStore.getDepartment(route.query.hoscode as string);
 });
 
 </script>

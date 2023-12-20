@@ -5,6 +5,8 @@
       <router-view></router-view>
     </div>
     <GuahaoBottom></GuahaoBottom>
+    <!-- Login组件 -->
+    <Login/>
   </div>
 </template>
 

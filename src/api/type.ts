@@ -1,4 +1,3 @@
-import { hospital } from './type';
 export interface ResponseData {
   code: number;
   message: string;
@@ -129,4 +128,31 @@ export interface HospitalDetail{
 }
 export interface HospitalDetail extends ResponseData{
   data:HospitalDetail;
+}
+
+//医院科室类型
+export interface Department{
+  depcode: string,
+  depname: string,
+  children?:Department[];
+}
+//医院科室数组类型
+export type DepartmentArr = Department[];
+//获取医院科室接口返回数据类型
+export interface DepartmentResponseData extends ResponseData{
+  data:DepartmentArr;
+}
+//用户登录接口需要携带参数类型
+export interface LoginData{
+  phone:string;
+  code:string;
+}
+//用户登录接口返回用户信息数据类型
+export interface UserInfo{
+  name:string;
+  token:string;
+}
+//登录接口返回的数据的ts类型  
+export interface UserLoginResponseData extends ResponseData{
+  data:UserInfo;
 }

@@ -6,8 +6,10 @@
         <p style="color: rgb(37, 119, 186)">全国统一预约挂号平台</p>
       </div>
       <div class="right">
-        <p class="help">帮助中心</p>
-        <p>登录/注册</p>
+        <p class="help" v-if="!userStore.userInfo.name">帮助中心</p>
+        <p class="help" v-else>{{ time }}好(#^.^#)，</p>
+        <p @click="login" v-if="!userStore.userInfo.name">登录/注册</p>
+        <p v-else>{{ userStore.userInfo.name }}</p>
       </div>
     </div>
   </div>
@@ -15,11 +17,32 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import useUserStore from "@/store/modules/user.ts";
+import { ref } from 'vue';
+let userStore = useUserStore();
 
 let router = useRouter()
 const goHome = () => {
   router.push('/home')
 }
+const login = () => {
+  userStore.visiable = true
+}
+//判断time时间是早上/中午/下午/晚上
+const time = ref('')
+const now = new Date().getHours()
+if (now < 9 && now > 6) {
+  time.value = '早上'
+} else if (now < 12 && now > 9) {
+  time.value = '上午'
+} else if (now < 14 && now > 12) {
+  time.value = '中午'
+} else if (now < 17 && now > 14) {
+  time.value = '下午'
+} else {
+  time.value = '晚上'
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -32,16 +55,19 @@ const goHome = () => {
   display: flex;
   justify-content: center;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
   .content {
     width: 1200px;
     height: 70px;
     display: flex;
     justify-content: space-between;
+
     // background-color: red;
     .left {
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         border-radius: 50%;
         width: 35px;
@@ -49,19 +75,21 @@ const goHome = () => {
         margin-bottom: 10px;
         margin-right: 5px;
       }
+
       p {
         font-size: 20px;
         font-weight: bold;
       }
     }
+
     .right {
       display: flex;
       justify-content: center;
       align-items: center;
+
       .help {
         margin-right: 10px;
       }
     }
   }
-}
-</style>
+}</style>

@@ -14,14 +14,14 @@
     </div>
     <div class="content">
       <div class="left">
-        <img :src="`data:image/jpeg;base64,` + hospitalStore.hospitalInfo.hospital?.logoData" alt="">
+        <img :src="`data:image/jpeg;base64,` + hospitalStore.hospitalInfo.hospital?.logoData" alt="" />
       </div>
       <div class="right">
         <span>挂号规则</span>
         <div class="time">
-          预约周期：{{hospitalStore.hospitalInfo.bookingRule?.cycle}}天
-          放号时间: {{ hospitalStore.hospitalInfo.bookingRule?.releaseTime }}
-          停挂时间: {{hospitalStore.hospitalInfo.bookingRule?.stopTime}}
+          预约周期：{{ hospitalStore.hospitalInfo.bookingRule?.cycle }}天 放号时间:
+          {{ hospitalStore.hospitalInfo.bookingRule?.releaseTime }} 停挂时间:
+          {{ hospitalStore.hospitalInfo.bookingRule?.stopTime }}
         </div>
         <div class="address">
           具体地址：{{ hospitalStore.hospitalInfo.hospital?.param.fullAddress }}
@@ -30,11 +30,32 @@
           规划路线：{{ hospitalStore.hospitalInfo.hospital?.route }}
         </div>
         <div class="stoptime">
-          退号时间：就诊前一工作日{{ hospitalStore.hospitalInfo.bookingRule?.quitTime }}前取消
+          退号时间：就诊前一工作日{{
+            hospitalStore.hospitalInfo.bookingRule?.quitTime
+          }}前取消
         </div>
         <div class="rule">预约挂号规则</div>
-        <div class="ruleInfo" v-for="(item,index) in hospitalStore.hospitalInfo.bookingRule?.rule" :key="index">
-          {{index+1}}、{{ item }}
+        <div class="ruleInfo" v-for="(item, index) in hospitalStore.hospitalInfo.bookingRule?.rule" :key="index">
+          {{ index + 1 }}、{{ item }}
+        </div>
+      </div>
+    </div>
+    <!-- 每个科室数据 -->
+    <div class="department">
+      <div class="leftNav">
+        <ul>
+          <li @click="changeIndex(index)" v-for="(department, index) in hospitalStore.departmentArr"
+            :key="department.depcode" :class="{ active: index == currentIndex }">
+            {{ department.depname }}
+          </li>
+        </ul>
+      </div>
+      <div class="departmentInfo">
+        <div class="showDepartment" v-for="(department) in hospitalStore.departmentArr" :key="department.depcode">
+          <h1 class="cur">{{ department.depname }}</h1>
+          <ul>
+            <li @click="showLogin" v-for="(item) in department.children" :key="item.depcode">{{ item.depname }}</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -44,17 +65,35 @@
 <script setup lang="ts">
 //引入仓库数据
 import useDetailStore from "@/store/modules/hospitalDetail.ts";
+import { ref } from "vue";
+import useUserStore from "@/store/modules/user.ts";
+let userStore = useUserStore();
+
 let hospitalStore = useDetailStore();
-console.log('hospitalStore', hospitalStore)
+console.log("hospitalStore", hospitalStore);
+let currentIndex = ref<number>(0);
 
+const changeIndex = (index: number) => {
+  currentIndex.value = index;
+  //点击导航获取对应的科室
+  let allH1 = document.querySelectorAll(".cur");
+  allH1[currentIndex.value].scrollIntoView({
+    behavior: "smooth", // 平滑滚动
+    block: "start", // 对齐方式
+  });
+};
+
+const showLogin = () => {
+  userStore.visiable = true;
+};
 </script>
-
 <style scoped>
 .register {
   .top {
     display: flex;
     margin: 20px 20px;
     align-items: flex-end;
+
     .title {
       font-size: 20px;
       margin-right: 10px;
@@ -67,26 +106,101 @@ console.log('hospitalStore', hospitalStore)
       color: #7f7f7f;
     }
   }
-  .content{
+
+  .content {
     display: flex;
     margin: 20px 20px;
     font-size: 15px;
     line-height: 1.3;
-    .left{
+
+    .left {
       width: 200px;
       height: 200px;
       border-radius: 10px;
-      overflow: hidden;
-      img{
+
+      img {
         width: 100px;
         height: 100px;
         border-radius: 50%;
       }
     }
-    .right{
+
+    .right {
       margin-left: 20px;
-      span,div{
+
+      span,
+      div {
         margin-bottom: 10px;
+      }
+    }
+  }
+
+  /* .department背景灰色，点击时白色*/
+  .department {
+    display: flex;
+    margin: 20px 20px;
+
+    .leftNav {
+      width: 200px;
+      height: 100%;
+
+      /* border-radius: 10px; */
+      ul {
+        li {
+          padding: 10px 20px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #f5f5f5;
+          }
+
+          &.active {
+            background-color: #f5f5f5;
+            border-left: 4px solid red;
+          }
+        }
+      }
+    }
+    /* departmentInfo和leftNav高度一致 */
+    .departmentInfo {
+      flex: 1;
+      background-color: #f5f5f5;
+      height: 500px;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      /* 每行显示3个showDepartment */
+      .showDepartment {
+        display: flex;
+        flex-wrap: wrap;
+        /* padding: 10px; */
+
+        h1 {
+          background-color: black;
+          color: white;
+          width: 100%;
+          line-height: 30px;
+          font-size: 25px;
+          font-weight: bold;
+        }
+
+        ul {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-wrap: wrap;
+
+          li {
+            width: 33.33%;
+            padding: 10px 20px;
+            cursor: pointer;
+            flex-wrap: nowrap;
+            &:hover {
+              background-color: #fff;
+            }
+          }
+        }
       }
     }
   }
