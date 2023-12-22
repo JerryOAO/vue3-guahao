@@ -27,14 +27,14 @@
       </div>
       <div class="content">
         <ul>
-          <li>神经内科</li>
-          <li>呼吸内科</li>
-          <li>消化内科</li>
-          <li>内科</li>
-          <li>神经外科</li>
-          <li>妇科</li>
-          <li>产科</li>
-          <li>儿科</li>
+          <li><el-link :underline="false">神经内科</el-link></li>
+          <li><el-link :underline="false">呼吸内科</el-link></li>
+          <li><el-link :underline="false">消化内科</el-link></li>
+          <li><el-link :underline="false">内科</el-link></li>
+          <li><el-link :underline="false">神经外科</el-link></li>
+          <li><el-link :underline="false">妇科</el-link></li>
+          <li><el-link :underline="false">产科</el-link></li>
+          <li><el-link :underline="false">儿科</el-link></li>
         </ul>
       </div>
     </div>

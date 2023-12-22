@@ -7,9 +7,29 @@
       </div>
       <div class="right">
         <p class="help" v-if="!userStore.userInfo.name">帮助中心</p>
-        <p class="help" v-else>{{ time }}好(#^.^#)，</p>
+        <div class="help" v-else>
+          <Icon class="icon" icon="emojione-v1:face-savoring-food" />&nbsp;
+          <p class="help">{{ time }}好</p>
+        </div>
         <p @click="login" v-if="!userStore.userInfo.name">登录/注册</p>
-        <p v-else>{{ userStore.userInfo.name }}</p>
+        <p v-else>
+          <el-dropdown>
+            <span class="el-dropdown-link help">
+              {{ userStore.userInfo.name }}
+              <el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon></span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item><el-icon><User /></el-icon>个人中心</el-dropdown-item>
+                <el-dropdown-item><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
+                <!-- <el-dropdown-item>Action 3</el-dropdown-item> -->
+                <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item> -->
+                <!-- <el-dropdown-item divided>Action 5</el-dropdown-item> -->
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </p>
       </div>
     </div>
   </div>
@@ -19,6 +39,8 @@
 import { useRouter } from 'vue-router';
 import useUserStore from "@/store/modules/user.ts";
 import { ref } from 'vue';
+import { Icon } from '@iconify/vue';
+import { ArrowDown,User,SwitchButton } from '@element-plus/icons-vue'
 let userStore = useUserStore();
 
 let router = useRouter()
@@ -88,8 +110,22 @@ if (now < 9 && now > 6) {
       align-items: center;
 
       .help {
-        margin-right: 10px;
+        display: flex;
+        margin-right: 5px;
+        .icon{
+          width: 16px;
+          height: 16px;
+        }
       }
     }
   }
-}</style>
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: red;
+  font-size: 16px;
+  // display: flex;
+  // align-items: center;
+}
+</style>

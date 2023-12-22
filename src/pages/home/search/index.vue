@@ -1,5 +1,6 @@
 <template>
   <div class="search">
+    <span>医院名称查询：</span>
     <el-autocomplete @select="goDetail" :trigger-on-focus="false" placeholder="请输入医院名称" clearable v-model="hosname" :fetch-suggestions="fetchData"/>
     <el-button type="primary" size="default" :icon="Search">搜索</el-button>
   </div>
