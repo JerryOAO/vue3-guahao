@@ -3,15 +3,15 @@
     <div class="content">
       <div class="left" @click="goHome">
         <img src="../../assets/imgs/挂号.png" alt="logo" />
-        <p style="color: rgb(37, 119, 186)">全国统一预约挂号平台</p>
+        <p class="cursor" style="color: rgb(37, 119, 186)">全国统一预约挂号平台</p>
       </div>
       <div class="right">
-        <p class="help" v-if="!userStore.userInfo.name">帮助中心</p>
+        <p class="help cursor" v-if="!userStore.userInfo.name">帮助中心</p>
         <div class="help" v-else>
           <Icon class="icon" icon="emojione-v1:face-savoring-food" />&nbsp;
           <p class="help">{{ time }}好</p>
         </div>
-        <p @click="login" v-if="!userStore.userInfo.name">登录/注册</p>
+        <p class="cursor" @click="login" v-if="!userStore.userInfo.name">登录/注册</p>
         <p v-else>
           <el-dropdown>
             <span class="el-dropdown-link help">
@@ -21,20 +21,42 @@
               </el-icon></span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item><el-icon><User /></el-icon>实名认证</el-dropdown-item>
-                <el-dropdown-item><el-icon><Tickets /></el-icon>挂号订单</el-dropdown-item>
-                <el-dropdown-item><el-icon><FirstAidKit /></el-icon>就诊人管理</el-dropdown-item>
-                <el-dropdown-item><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
-                <!-- <el-dropdown-item>Action 3</el-dropdown-item> -->
-                <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item> -->
-                <!-- <el-dropdown-item divided>Action 5</el-dropdown-item> -->
+                <el-dropdown-item><el-icon>
+                    <User />
+                  </el-icon>实名认证</el-dropdown-item>
+                <el-dropdown-item><el-icon>
+                    <Tickets />
+                  </el-icon>挂号订单</el-dropdown-item>
+                <el-dropdown-item><el-icon>
+                    <FirstAidKit />
+                  </el-icon>就诊人管理</el-dropdown-item>
+                <el-dropdown-item @click="centerDialogVisible = true"><el-icon>
+                    <SwitchButton />
+                  </el-icon>退出登录</el-dropdown-item>
               </el-dropdown-menu>
+              <!-- 确认退出框  -->
             </template>
           </el-dropdown>
         </p>
       </div>
     </div>
   </div>
+  <el-dialog v-model="centerDialogVisible" width="20%" align-center :modal="false" :lock-scroll="false" :close-on-click-modal="false">
+    <span>确定要退出账号吗？</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="logout">
+          确定
+        </el-button>
+      </span>
+    </template>
+    <template #header>
+      <h1 style="font-weight: bold;">
+        退出登录
+      </h1>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +64,8 @@ import { useRouter } from 'vue-router';
 import useUserStore from "@/store/modules/user.ts";
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
-import { ArrowDown,User,SwitchButton,Tickets,FirstAidKit } from '@element-plus/icons-vue'
+import { ArrowDown, User, SwitchButton, Tickets, FirstAidKit } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus';
 let userStore = useUserStore();
 
 let router = useRouter()
@@ -67,6 +90,14 @@ if (now < 9 && now > 6) {
   time.value = '晚上'
 }
 
+//退出登录确认框
+const centerDialogVisible = ref(false)
+//退出登录
+const logout = () => {
+  centerDialogVisible.value = false
+  userStore.logout()
+  ElMessage.success('退出账号成功！') 
+}
 </script>
 
 <style scoped lang="scss">
@@ -114,13 +145,18 @@ if (now < 9 && now > 6) {
       .help {
         display: flex;
         margin-right: 5px;
-        .icon{
+
+        .icon {
           width: 16px;
           height: 16px;
         }
       }
     }
   }
+}
+
+.cursor {
+  cursor: pointer
 }
 
 .el-dropdown-link {

@@ -6,3 +6,8 @@ export const SET_TOKEN = (userinfo: string) => {
 export const GET_TOKEN = () => {
   return localStorage.getItem('userinfo')
 } 
+
+// 退出登录
+export const REMOVE_TOKEN = () => {
+  localStorage.removeItem('userinfo')
+}

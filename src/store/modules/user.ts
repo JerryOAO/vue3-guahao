@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { reqValidateCode, reqUserLogin } from '@/api';
-import { SET_TOKEN, GET_TOKEN } from '@/utils/user';
+import { SET_TOKEN, GET_TOKEN,REMOVE_TOKEN } from '@/utils/user';
 import type { LoginData, UserLoginResponseData } from '@/api/type';
 import type { UserState } from '@/store/modules/interface/index';
 
@@ -35,6 +35,11 @@ const useUserStore = defineStore('User', {
       } else {
         return Promise.reject(new Error(result.message))
       }
+    },
+    //用户退出登录的方法
+    logout() {
+      this.userInfo = {name:'',token:''}
+      REMOVE_TOKEN()
     }
   },
   getters: {

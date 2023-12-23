@@ -1,7 +1,7 @@
 <template>
   <div class="login_container">
     <!-- 登录框 -->
-    <el-dialog v-model="userStore.visiable" title="用户登录" align-center>
+    <el-dialog v-model="userStore.visiable" title="用户登录" align-center @close="close" width="38%">
       <el-row>
         <el-col :span="12">
           <div class="login">
@@ -13,15 +13,16 @@
                 <el-form-item class="captchas" prop="code">
                   <el-input class="captcha" :prefix-icon="Iphone" placeholder="请输入短信验证码"
                     v-model="loginParam.code"></el-input>
-                  <el-button :disabled="!isPhone || flag" @click="getCode">
+                  <el-button :disabled="!isPhone || flag" @click="getCode" type="">
                     <countDown v-if="flag" :flag="flag" @getFlag="getFlag" />
                     <span v-else>获取验证码</span>
                   </el-button>
                 </el-form-item>
                 <div class="bottom">
                   <el-button type="primary" style="width:100%" @click="login">登录</el-button>
-                  <p style="margin-bottom: 5px;" @click="changeTag">微信扫码登录</p>
-                  <svg t="1702391924288" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                  <p class="cursor" style="padding: 0px; color:black !important;font-weight: bold;margin-bottom: 5px;" @click="changeTag">
+                    微信扫码登录</p>
+                  <svg @click="changeTag" t="1702391924288" class="icon cursor" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="4296" width="30" height="30">
                     <path
                       d="M512 1024C229.23 1024 0 794.77 0 512S229.23 0 512 0s512 229.23 512 512-229.23 512-512 512z m107.91-626.371H640c-20.09-94.744-115.566-162.962-225.304-162.962-124.002 0-222.696 86.04-222.696 198.607 0 65.097 34.572 115.492 89.43 156.94l-23.114 71.12 77.995-41.448a354.748 354.748 0 0 0 77.97 11.8h20.114a133.608 133.608 0 0 1-5.851-47.47 193.122 193.122 0 0 1 57.466-134.412 181.37 181.37 0 0 1 133.096-52.175h0.804z m-115.273-56.296c15.848 0 28.696 14.288 28.696 31.915s-12.848 31.915-28.696 31.915c-17.652 1.95-33.402-12.313-35.304-31.94 0-22.284 17.457-31.89 34.719-31.89h0.585z m-171.032 63.878c-17.555 1.463-33.012-12.653-34.938-31.89 1.926-19.212 17.383-33.329 34.938-31.89 16.042 0 29.062 14.287 29.062 31.915 0 17.603-13.02 31.89-29.062 31.89zM832 574.805c0-92.233-90.136-169.472-192-169.472-107.764 0-192 77.24-192 169.448 0 92.257 84.456 169.496 192 169.496a264.24 264.24 0 0 0 66.828-11.873L767.586 768l-17.408-59.538c49.42-35.596 81.017-83.286 81.017-133.852l0.805 0.195zM573.562 554.52c-10.435 0-18.895-9.484-18.895-21.187s8.46-21.211 18.895-21.211c11.727-1.39 22.308 7.997 23.771 21.114-1.39 13.214-11.97 22.698-23.771 21.284z m128 0.098c-10.435 0-18.895-9.509-18.895-21.212 0-11.751 8.46-21.26 18.895-21.26 11.727-1.414 22.308 7.997 23.771 21.139-2.194 12.921-12.58 22.04-24.259 21.333h0.488z"
@@ -30,8 +31,17 @@
                 </div>
               </el-form>
             </div>
-            <div v-show="tag == 1">
-              微信扫码登录
+            <div class="wx" v-show="tag == 1">
+              <div id="login_container"></div>
+              <div class="bottom" @click="changeTag">
+                <p class="cursor" style="padding: 0px; color:black !important;font-weight: bold;">← 返回短信验证登录</p>
+                <svg t="1703341384820" class="icon cursor" viewBox="0 0 1024 1024" version="1.1"
+                  xmlns="http://www.w3.org/2000/svg" p-id="16453" width="30" height="30">
+                  <path
+                    d="M512 0c283.105882 0 512 228.894118 512 512s-228.894118 512-512 512S0 795.105882 0 512 228.894118 0 512 0z m0 256c-144.564706 0-265.035294 102.4-265.035294 228.894118 0 75.294118 42.164706 141.552941 105.411765 183.717647v99.388235l78.305882-51.2c6.023529-3.011765 12.047059-9.035294 18.070588-12.047059 21.082353 3.011765 42.164706 6.023529 63.247059 6.02353 144.564706 0 265.035294-102.4 265.035294-228.894118 0-123.482353-120.470588-225.882353-265.035294-225.882353z m-111.435294 192.752941c18.070588 0 36.141176 15.058824 36.141176 36.141177 0 18.070588-15.058824 36.141176-36.141176 36.141176-9.035294 0-18.070588-3.011765-24.094118-9.035294-6.023529-6.023529-9.035294-15.058824-9.035294-24.094118-3.011765-21.082353 12.047059-39.152941 33.129412-39.152941z m117.458823 0c18.070588 0 36.141176 15.058824 36.141177 36.141177 0 18.070588-15.058824 36.141176-36.141177 36.141176-9.035294 0-18.070588-3.011765-24.094117-9.035294-6.023529-6.023529-9.035294-15.058824-9.035294-24.094118-3.011765-21.082353 12.047059-39.152941 33.129411-39.152941z m117.458824 0c18.070588 0 36.141176 15.058824 36.141176 36.141177 0 18.070588-15.058824 36.141176-36.141176 36.141176-9.035294 0-18.070588-3.011765-24.094118-9.035294-6.023529-6.023529-9.035294-15.058824-9.035294-24.094118-3.011765-21.082353 12.047059-39.152941 33.129412-39.152941z"
+                    fill="#ACB8C4" p-id="16454"></path>
+                </svg>
+              </div>
             </div>
           </div>
         </el-col>
@@ -95,10 +105,30 @@ import useUserStore from "@/store/modules/user.ts";
 import { User, Iphone } from '@element-plus/icons-vue'
 import { ref, reactive, computed } from "vue";
 import { ElMessage } from 'element-plus'
+import { reqWxLogin } from '@/api/index.ts'
+import type { WXLoginResponseData } from '@/api/type.ts'
 let userStore = useUserStore();
 let tag = ref<number>(0); // 0:手机号登录 1:微信登录
-const changeTag = () => {
+const changeTag = async () => {
   tag.value = tag.value == 0 ? 1 : 0;
+  //请求微信登录接口参数
+  let redirect_URL = encodeURIComponent(window.location.origin + '/wxlogin')
+  let wxloginParams: WXLoginResponseData = await reqWxLogin(redirect_URL)
+  console.log('wxloginParams.data.redirectUri',wxloginParams.data.redirectUri)
+  //生成微信二维码登录页面
+  let wxstyle = "LmltcG93ZXJCb3ggLnFyY29kZSB7DQogIGJvcmRlcjogbm9uZTsNCiAgd2lkdGg6IDEzMHB4Ow0KICBoZWlnaHQ6IDEzMHB4Ow0KfQ=="
+  let href = "data:text/css;base64," + wxstyle;
+  //@ts-ignore
+  new WxLogin({
+    self_redirect: false,
+    id: "login_container",
+    appid: wxloginParams.data.appid,
+    scope: "snsapi_login",
+    redirect_uri: wxloginParams.data.redirectUri,
+    state: 'syt-http://127.0.0.1:5173/wxlogin/',
+    style: "black",
+    href: href
+  });
 }
 const closeLogin = () => {
   userStore.visiable = false;
@@ -114,7 +144,7 @@ let isPhone = computed(() => {
 
 // flag 显示获取验证码按钮  flase开始倒计时  true显示获取验证码
 let flag = ref<boolean>(false);
-const changeFlag = () => {
+const changeFlag = async () => {
   flag.value = true;
 }
 const getFlag = (val: boolean) => {
@@ -166,6 +196,14 @@ const rules = {
     { pattern: /^\d{6}$/, message: '验证码格式不正确', trigger: 'blur' }
   ]
 }
+//登录框关闭时的回调
+const close = () => {
+  //重置表单
+  form.value.resetFields()
+}
+
+//二维码登录
+
 </script>
 
 <style scoped>
@@ -192,6 +230,16 @@ const rules = {
 
     p {
       margin-top: 20px;
+    }
+  }
+
+  .wx {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin: 5px 0;
     }
   }
 }
@@ -250,4 +298,13 @@ const rules = {
     height: 23px;
   }
 }
-</style>
+
+::v-deep iframe {
+  width: 100%;
+  height: 240px;
+}
+
+::v-deep iframe img {
+  max-width: 100%;
+  height: auto;
+}</style>

@@ -5,8 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, defineEmits, ref, watch } from 'vue'
 //接受父组件传递过来的props->flag：用于控制计数器组件显示与隐藏
-const time = ref<number>(60)
+const time = ref<number>(5)
 let props = defineProps(['flag'])
 let $emit = defineEmits(['getFlag'])
 watch(
