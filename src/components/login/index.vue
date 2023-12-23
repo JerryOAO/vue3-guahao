@@ -6,15 +6,15 @@
         <el-col :span="12">
           <div class="login">
             <div v-show="tag == 0">
-              <el-form>
-                <el-form-item>
+              <el-form :model="loginParam" :rules="rules" ref="form">
+                <el-form-item prop="phone">
                   <el-input :prefix-icon="User" placeholder="请输入手机号" v-model="loginParam.phone"></el-input>
                 </el-form-item>
-                <el-form-item class="captchas">
+                <el-form-item class="captchas" prop="code">
                   <el-input class="captcha" :prefix-icon="Iphone" placeholder="请输入短信验证码"
                     v-model="loginParam.code"></el-input>
                   <el-button :disabled="!isPhone || flag" @click="getCode">
-                    <countDown v-if="flag" :flag="flag" @getFlag="getFlag"/>
+                    <countDown v-if="flag" :flag="flag" @getFlag="getFlag" />
                     <span v-else>获取验证码</span>
                   </el-button>
                 </el-form-item>
@@ -136,8 +136,9 @@ const getCode = async () => {
   }
 }
 //登录
-const login = async () =>{
-
+const login = async () => {
+  //判断校验规则是否通过，如果不通过，用ElMessage提示错误信息
+  await form.value.validate()
   //登录成功：顶部组件展示用户名字、登录框关闭
   //登录失败：弹出登录失败错误信息
   try {
@@ -150,9 +151,21 @@ const login = async () =>{
       message: error as string,
       type: 'error',
     })
-  } 
+  }
 }
 
+//表单校验规则
+let form = ref<any>()
+const rules = {
+  phone: [
+    { required: true, message: '请输入手机号', trigger: 'blur' },
+    { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
+  ],
+  code: [
+    { required: true, message: '请输入验证码', trigger: 'blur' },
+    { pattern: /^\d{6}$/, message: '验证码格式不正确', trigger: 'blur' }
+  ]
+}
 </script>
 
 <style scoped>

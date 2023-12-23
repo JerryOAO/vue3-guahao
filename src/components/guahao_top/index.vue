@@ -21,7 +21,9 @@
               </el-icon></span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item><el-icon><User /></el-icon>个人中心</el-dropdown-item>
+                <el-dropdown-item><el-icon><User /></el-icon>实名认证</el-dropdown-item>
+                <el-dropdown-item><el-icon><Tickets /></el-icon>挂号订单</el-dropdown-item>
+                <el-dropdown-item><el-icon><FirstAidKit /></el-icon>就诊人管理</el-dropdown-item>
                 <el-dropdown-item><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
                 <!-- <el-dropdown-item>Action 3</el-dropdown-item> -->
                 <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item> -->
@@ -40,7 +42,7 @@ import { useRouter } from 'vue-router';
 import useUserStore from "@/store/modules/user.ts";
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
-import { ArrowDown,User,SwitchButton } from '@element-plus/icons-vue'
+import { ArrowDown,User,SwitchButton,Tickets,FirstAidKit } from '@element-plus/icons-vue'
 let userStore = useUserStore();
 
 let router = useRouter()
