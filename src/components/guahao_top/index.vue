@@ -13,7 +13,7 @@
         </div>
         <p class="cursor" @click="login" v-if="!userStore.userInfo.name">登录/注册</p>
         <p v-else>
-          <el-dropdown>
+          <el-dropdown trigger="click">
             <span class="el-dropdown-link help">
               {{ userStore.userInfo.name }}
               <el-icon class="el-icon--right">

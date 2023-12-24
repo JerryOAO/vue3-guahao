@@ -1,4 +1,3 @@
-import path from 'path'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -29,13 +28,16 @@ const routes = [
       {
         path: 'search',
         component: () => import('@/pages/hospital/search/index.vue'),
+      },
+      {
+        path:'register_step1',
+        component: () => import('@/pages/hospital/register/register_step1.vue')
       }
     ]
   },
   {
     path:'/wxlogin',
-    component:()=>import('@/pages/wxlogin/index.vue'),
-    redirect: '/home'
+    component:()=>import('@/pages/wxlogin/index.vue')
   },
   {
     path: '/',

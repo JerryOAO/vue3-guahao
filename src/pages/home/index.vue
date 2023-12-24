@@ -96,7 +96,6 @@ const getHospital = async () => {
     hostype.value,
     districtCode.value
   );
-  console.log(result);
   if (result.code === 200) {
     console.log("result.data", result.data);
     hasHospitalArr.value = result.data.content;

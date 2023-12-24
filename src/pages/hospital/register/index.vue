@@ -54,7 +54,7 @@
         <div class="showDepartment" v-for="(department) in hospitalStore.departmentArr" :key="department.depcode">
           <h1 class="cur">{{ department.depname }}</h1>
           <ul>
-            <li @click="showLogin" v-for="(item) in department.children" :key="item.depcode">{{ item.depname }}</li>
+            <li @click="showLogin(item)" v-for="(item) in department.children" :key="item.depcode">{{ item.depname }}</li>
           </ul>
         </div>
       </div>
@@ -66,8 +66,11 @@
 //引入仓库数据
 import useDetailStore from "@/store/modules/hospitalDetail.ts";
 import { ref } from "vue";
-import useUserStore from "@/store/modules/user.ts";
-let userStore = useUserStore();
+import { useRouter,useRoute } from "vue-router";
+// import useUserStore from "@/store/modules/user.ts";
+// let userStore = useUserStore();
+let router = useRouter();
+let route = useRoute();
 
 let hospitalStore = useDetailStore();
 console.log("hospitalStore", hospitalStore);
@@ -83,12 +86,13 @@ const changeIndex = (index: number) => {
   });
 };
 
-const showLogin = () => {
-  userStore.visiable = true;
+const showLogin = (item:any) => {
+  // userStore.visiable = true;
+  router.push({path:'/hospital/register_step1',query:{hoscode:route.query.hoscode,depcode:item.depcode}})
 };
 </script>
 <style scoped>
-.register {
+.register { 
   .top {
     display: flex;
     margin: 20px 20px;

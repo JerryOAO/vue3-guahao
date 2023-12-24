@@ -14,7 +14,6 @@ const useDetailStore = defineStore('Detail',{
     //获取医院详情
     async getHospital(hoscode:string){
       let result:HospitalDetail  =  await reqHospitalDetail(hoscode)
-      console.log('result666666666666',result)
       if(result.code === 200){
         this.hospitalInfo = result.data
       }
@@ -22,7 +21,6 @@ const useDetailStore = defineStore('Detail',{
     //获取医院科室数据
     async getDepartment(hoscode:string){
       let result:DepartmentResponseData = await reqHospitalDepartment(hoscode)
-      console.log('result88888888888888',result)
       if(result.code === 200){
         this.departmentArr = result.data
       }

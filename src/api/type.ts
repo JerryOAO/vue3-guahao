@@ -1,3 +1,4 @@
+import { baseMap } from './type';
 export interface ResponseData {
   code: number;
   message: string;
@@ -166,4 +167,33 @@ export interface WXLogin{
 //获取微信扫码登录参数接口返回数据的ts类型
 export interface WXLoginResponseData extends ResponseData{
   data:WXLogin;
+}
+//医院科室挂号返回的数据
+export interface BaseMap{
+  workDateString:string,
+  releaseTime:string,
+  bigname:string,
+  stopTime:string,
+  depname:string,
+  hosname:string
+}
+
+export interface WorkData{
+  workDate:string,
+  workDateMd:string,
+  dayOfWeek:string,
+  docCount:number,
+  reservedNumber:null,
+  availableNumber:number,
+  status:number
+}
+
+export type BookingScheduleList = WorkData[];
+
+export interface HospitalWorkData extends ResponseData{
+  data:{
+    total:number,
+    bookingScheduleList:BookingScheduleList,
+    baseMap:BaseMap
+  }
 }

@@ -126,7 +126,7 @@ const changeTag = async () => {
     scope: "snsapi_login",
     redirect_uri: wxloginParams.data.redirectUri,
     style: "black",
-    state: "syt-http://localhost:5173/wxlogin/",
+    state: "syt-http://localhost:5174/wxlogin/",
     // state:wxloginParams.data.state,
     href: href
   });
@@ -204,6 +204,17 @@ const close = () => {
 }
 
 //二维码登录
+// watch(()=>tag.value,(val:number)=>{
+//   if(val===1){
+//     userStore.queryState()
+//   }
+// })
+//监听localstorage中userinfo是否有变化
+// watch(()=>userStore.userInfo,(val:any)=>{
+//   if(val){
+//     userStore.queryState()
+//   }
+// })
 
 </script>
 

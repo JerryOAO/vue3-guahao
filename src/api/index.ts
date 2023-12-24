@@ -7,7 +7,7 @@
  * @Description: 这里填写描述
  */
 import request from '@/utils/request'
-import type { hospitalResponseData, HospitalLevelAndRegionResponseData, HospitalInfo, HospitalDetail, DepartmentResponseData, LoginData, UserLoginResponseData, WXLoginResponseData } from './type'
+import type { HospitalWorkData,hospitalResponseData, HospitalLevelAndRegionResponseData, HospitalInfo, HospitalDetail, DepartmentResponseData, LoginData, UserLoginResponseData, WXLoginResponseData } from './type'
 
 enum API {
   //获取医院列表接口
@@ -26,6 +26,8 @@ enum API {
   USER_LOGIN_URL = '/user/login',
   //获取微信扫码登录参数
   WXLOGIN_URL = '/user/weixin/getLoginParam/',
+  //获取科室预约挂号数据
+  HOSPITALWORK_URL = '/hosp/hospital/auth/getBookingScheduleRule/'
 }
 //获取医院数据
 export const reqHospital = (page: number, limit: number, hostype = '', districtCode = '') => request.get<any, hospitalResponseData>(API.HOSPITAL_URL + `${page}/${limit}?hostype=${hostype}&districtCode=${districtCode}`)
@@ -43,3 +45,5 @@ export const reqValidateCode = (phone: string) => request.get<any, any>(API.GET_
 export const reqUserLogin = (data: LoginData) => request.post<any, UserLoginResponseData>(API.USER_LOGIN_URL, data)
 //获取微信扫码登录参数
 export const reqWxLogin = (wxRedirectUrl:string) => request.get<any, WXLoginResponseData>(API.WXLOGIN_URL+`?wxRedirectUrl=${wxRedirectUrl}`)
+//获取科室预约挂号数据
+export const reqHospitalWork = (page:number,limit:number,hoscode:string,depcode:string) => request.get<any, HospitalWorkData>(API.HOSPITALWORK_URL+`${page}/${limit}/${hoscode}/${depcode}`)

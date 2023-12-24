@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { reqValidateCode, reqUserLogin } from '@/api';
-import { SET_TOKEN, GET_TOKEN,REMOVE_TOKEN } from '@/utils/user';
+import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/user';
 import type { LoginData, UserLoginResponseData } from '@/api/type';
 import type { UserState } from '@/store/modules/interface/index';
 
@@ -38,8 +38,14 @@ const useUserStore = defineStore('User', {
     },
     //用户退出登录的方法
     logout() {
-      this.userInfo = {name:'',token:''}
+      this.userInfo = { name: '', token: '' }
       REMOVE_TOKEN()
+    },
+    //查询微信扫码的接口
+    queryState() {
+      //   //关闭登录框
+      this.userInfo = JSON.parse(GET_TOKEN() as string)
+      this.visiable = false
     }
   },
   getters: {
