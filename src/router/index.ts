@@ -34,7 +34,8 @@ const routes = [
   },
   {
     path:'/wxlogin',
-    component:()=>import('@/pages/wxlogin/index.vue')
+    component:()=>import('@/pages/wxlogin/index.vue'),
+    redirect: '/home'
   },
   {
     path: '/',

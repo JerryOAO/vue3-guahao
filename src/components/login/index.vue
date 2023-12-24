@@ -1,7 +1,7 @@
 <template>
   <div class="login_container">
     <!-- 登录框 -->
-    <el-dialog v-model="userStore.visiable" title="用户登录" align-center @close="close" width="38%">
+    <el-dialog v-model="userStore.visiable" title="用户登录" align-center @close="close">
       <el-row>
         <el-col :span="12">
           <div class="login">
@@ -114,7 +114,7 @@ const changeTag = async () => {
   //请求微信登录接口参数
   let redirect_URL = encodeURIComponent(window.location.origin + '/wxlogin')
   let wxloginParams: WXLoginResponseData = await reqWxLogin(redirect_URL)
-  console.log('wxloginParams.data.redirectUri',wxloginParams.data.redirectUri)
+  console.log('wxloginParams',wxloginParams)
   //生成微信二维码登录页面
   let wxstyle = "LmltcG93ZXJCb3ggLnFyY29kZSB7DQogIGJvcmRlcjogbm9uZTsNCiAgd2lkdGg6IDEzMHB4Ow0KICBoZWlnaHQ6IDEzMHB4Ow0KfQ=="
   let href = "data:text/css;base64," + wxstyle;
@@ -125,8 +125,9 @@ const changeTag = async () => {
     appid: wxloginParams.data.appid,
     scope: "snsapi_login",
     redirect_uri: wxloginParams.data.redirectUri,
-    state: 'syt-http://127.0.0.1:5173/wxlogin/',
     style: "black",
+    state: "syt-http://localhost:5173/wxlogin/",
+    // state:wxloginParams.data.state,
     href: href
   });
 }
