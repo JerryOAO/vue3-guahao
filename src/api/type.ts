@@ -1,4 +1,4 @@
-import { baseMap } from './type';
+import { baseMap, Doctor } from './type';
 export interface ResponseData {
   code: number;
   message: string;
@@ -196,4 +196,34 @@ export interface HospitalWorkData extends ResponseData{
     bookingScheduleList:BookingScheduleList,
     baseMap:BaseMap
   }
+}
+
+export interface Doctor{
+  id: string;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
+  param: {
+    dayOfWeek: string;
+    depname: string;
+    hosname: string;
+  }
+  hoscode: string;
+  depcode: string;
+  title: string;
+  docname: string;
+  skill: string;
+  workDate: string;
+  workTime: number;
+  reservedNumber: number;
+  availableNumber: number;
+  amount: number;
+  status: number;
+  hosScheduleId: string;
+}
+
+export type DocArr = Doctor[];
+
+export interface DoctorResponseData extends ResponseData{
+  data:DocArr;
 }

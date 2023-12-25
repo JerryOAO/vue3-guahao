@@ -41,6 +41,7 @@
       </div>
     </div>
     <!-- 每个科室数据 -->
+    <h1 class="tip">↓请在下方选择要挂号的科室↓</h1>
     <div class="department">
       <div class="leftNav">
         <ul>
@@ -92,6 +93,15 @@ const showLogin = (item:any) => {
 };
 </script>
 <style scoped>
+.tip{
+  /* background-color: black; */
+  /* color: white; */
+  width: 100%;
+  line-height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
 .register { 
   .top {
     display: flex;
