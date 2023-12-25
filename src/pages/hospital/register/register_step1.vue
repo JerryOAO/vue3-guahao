@@ -12,7 +12,7 @@
       <h1 class="time">{{ workData.baseMap?.workDateString }}</h1>
       <div class="container">
         <div class="item" :class="{ active: item.status == -1 || item.availableNumber == -1 }"
-          v-for="item in workData.bookingScheduleList" :key="item">
+          v-for="item in workData.bookingScheduleList" :key="item" @click="changeTime(item)">
           <div class="top">{{ item.workDate }} {{ item.dayOfWeek }}</div>
           <div class="bottom">
             <div v-if="item.status == -1">停止挂号</div>
@@ -31,53 +31,53 @@
     <!-- 医生预约 -->
     <div class="bottom">
       <!-- 即将放号的时间 -->
-      <div class="aboutTo">
+      <div class="aboutTo" v-if="workTime.status==1">
         <span>2023年12月25日 03:26:21</span>
         <span>即将放号</span>
       </div>
       <!-- 展示医生的详情 -->
-      <div class="doctor">
+      <div class="doctor" v-else>
         <div class="morning">
           <Icon icon="meteocons:time-late-morning-fill" />上午预约
         </div>
-        <div class="doc_info">
+        <div class="doc_info" v-for="doctor in morningArr" :key="doctor.id">
           <!-- 左侧医生名字|技能 -->
           <div class="left">
             <div class="info">
-              <span>副主任医师</span>
+              <span>{{doctor.title}}</span>
               <span>|</span>
-              <span>杰瑞</span>
+              <span>{{doctor.docname}}</span>
             </div>
             <div class="skill">
-              <span>擅长：儿科常见病、多发病的诊治</span>
+              <span>{{doctor.skill}}</span>
             </div>
           </div>
           <!-- 右侧挂号费用 -->
           <div class="right">
-            <span>￥45</span>
-            <el-button type="primary">剩余6</el-button>
+            <span>￥{{ doctor.amount }}</span>
+            <el-button type="primary">剩余{{doctor.availableNumber}}</el-button>
           </div>
         </div>
         <div class="afternoon">
           <Icon icon="meteocons:time-late-afternoon-fill" />
           下午预约
         </div>
-        <div class="doc_info">
+        <div class="doc_info" v-for="doctor in afternoonArr" :key="doctor.id">
           <!-- 左侧医生名字|技能 -->
           <div class="left">
             <div class="info">
-              <span>副主任医师</span>
+              <span>{{doctor.title}}</span>
               <span>|</span>
-              <span>杰瑞</span>
+              <span>{{doctor.docname}}</span>
             </div>
             <div class="skill">
-              <span>擅长：儿科常见病、多发病的诊治</span>
+              <span>{{doctor.skill}}</span>
             </div>
           </div>
           <!-- 右侧挂号费用 -->
           <div class="right">
-            <span>￥45</span>
-            <el-button type="primary">剩余9</el-button>
+            <span>￥{{ doctor.amount }}</span>
+            <el-button type="primary">剩余{{doctor.availableNumber}}</el-button>
           </div>
         </div>
       </div>
@@ -86,16 +86,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { reqHospitalWork } from "@/api";
+import { onMounted, ref,computed } from "vue";
+import { reqHospitalWork,reqHospitalDoctor } from "@/api";
 import { useRoute } from "vue-router";
-import { HospitalWorkData } from "@/api/type";
+import { HospitalWorkData,DoctorResponseData,DocArr,Doctor } from "@/api/type";
 import { Icon } from "@iconify/vue";
 //分页器
 let pageNo = ref<number>(1);
 let limit = ref<number>(6);
 // 医院科室挂号数据
 let workData = ref<any>({});
+// 存储第一天日期的数据
+let workTime = ref<any>({});
 let route = useRoute();
 onMounted(() => {
   console.log(11);
@@ -111,9 +113,37 @@ const fetchWorkData = async () => {
   console.log("result.data", result.data);
   if (result.code == 200) {
     workData.value = result.data;
-    console.log("result.data", result.data);
+    // 存储第一天日期的数据
+    workTime.value = workData.value.bookingScheduleList[0];
   }
 };
+//获取某天医生数据
+const getDoctorWorkData = async () =>{
+  let result:DoctorResponseData = await reqHospitalDoctor(
+    route.query.hoscode as string,
+    route.query.depcode as string,
+    workTime.value.workDate
+  )
+  if(result.code==200){
+    docArr.value = result.data
+  }
+}
+const docArr = ref<DocArr>([]);
+const changeTime = (item: any) => {
+  console.log("item", item);
+  workTime.value = item;
+  getDoctorWorkData()
+};
+let morningArr = computed(()=>{
+  return docArr.value.filter((doc:Doctor)=>{
+    return doc.workTime==0;
+  })
+})
+let afternoonArr = computed(()=>{
+  return docArr.value.filter((doc:Doctor)=>{
+    return doc.workTime==1;
+  })
+})
 </script>
 
 <style scoped>
@@ -172,7 +202,7 @@ const fetchWorkData = async () => {
           background-color: #cecece;
           border: #cecece dashed 3px;
           opacity: 0.5;
-          pointer-events: none;
+          /* pointer-events: none; */
 
           .top {
             background-color: #cecece;
