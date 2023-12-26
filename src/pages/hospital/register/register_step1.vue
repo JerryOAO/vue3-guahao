@@ -11,7 +11,7 @@
     <div class="center">
       <h1 class="time">{{ workData.baseMap?.workDateString }}</h1>
       <div class="container">
-        <div class="item" :class="{ active: item.status == -1 || item.availableNumber == -1 }"
+        <div  :class="{ active: item.status == -1 || item.availableNumber == -1,item, cur:item.workDate==workTime.workDate } "
           v-for="item in workData.bookingScheduleList" :key="item" @click="changeTime(item)">
           <div class="top">{{ item.workDate }} {{ item.dayOfWeek }}</div>
           <div class="bottom">
@@ -32,13 +32,13 @@
     <div class="bottom">
       <!-- 即将放号的时间 -->
       <div class="aboutTo" v-if="workTime.status==1">
-        <span>2023年12月25日 03:26:21</span>
-        <span>即将放号</span>
+        <span>{{workTime.workDate}}</span>
+        <span>&nbsp;即将放号</span>
       </div>
       <!-- 展示医生的详情 -->
       <div class="doctor" v-else>
         <div class="morning">
-          <Icon icon="meteocons:time-late-morning-fill" />上午预约
+          <Icon icon="meteocons:time-late-morning-fill" />{{workTime.workDate}} 上午预约 
         </div>
         <div class="doc_info" v-for="doctor in morningArr" :key="doctor.id">
           <!-- 左侧医生名字|技能 -->
@@ -55,12 +55,12 @@
           <!-- 右侧挂号费用 -->
           <div class="right">
             <span>￥{{ doctor.amount }}</span>
-            <el-button type="primary">剩余{{doctor.availableNumber}}</el-button>
+            <el-button @click="goStep2(doctor)" type="primary">剩余{{doctor.availableNumber}}</el-button>
           </div>
         </div>
         <div class="afternoon">
           <Icon icon="meteocons:time-late-afternoon-fill" />
-          下午预约
+          {{workTime.workDate}} 下午预约 
         </div>
         <div class="doc_info" v-for="doctor in afternoonArr" :key="doctor.id">
           <!-- 左侧医生名字|技能 -->
@@ -88,7 +88,7 @@
 <script setup lang="ts">
 import { onMounted, ref,computed } from "vue";
 import { reqHospitalWork,reqHospitalDoctor } from "@/api";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import { HospitalWorkData,DoctorResponseData,DocArr,Doctor } from "@/api/type";
 import { Icon } from "@iconify/vue";
 //分页器
@@ -99,6 +99,7 @@ let workData = ref<any>({});
 // 存储第一天日期的数据
 let workTime = ref<any>({});
 let route = useRoute();
+let router = useRouter()
 onMounted(() => {
   console.log(11);
   fetchWorkData();
@@ -144,6 +145,11 @@ let afternoonArr = computed(()=>{
     return doc.workTime==1;
   })
 })
+
+//挂号跳转
+const goStep2 = (doctor:Doctor) =>{
+  router.push({path:'/hospital/register_step2',query:{docId:doctor.id}})
+}
 </script>
 
 <style scoped>
@@ -184,10 +190,16 @@ let afternoonArr = computed(()=>{
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-
+      .cur{
+        scale: 1.1;
+        border:2px solid black;
+        transition: none !important;
+        transform: translateY(-0px) !important;
+      }
       .item {
+        box-sizing: border-box;
         background-color: rgb(232, 230, 230);
-        border: black solid 2px;
+        /* border: black solid 2px; */
         width: 130px;
         height: 80px;
         margin: 5px;
@@ -196,14 +208,11 @@ let afternoonArr = computed(()=>{
         flex-direction: column;
         /* justify-content: center; */
         align-items: center;
-        transition: all 0.3s;
-
         &.active {
           background-color: #cecece;
           border: #cecece dashed 3px;
           opacity: 0.5;
           /* pointer-events: none; */
-
           .top {
             background-color: #cecece;
           }
@@ -232,7 +241,6 @@ let afternoonArr = computed(()=>{
 
       .item:hover {
         cursor: pointer;
-        transform: translateY(-3px);
       }
     }
   }
