@@ -35,6 +35,14 @@
         <span>{{workTime.workDate}}</span>
         <span>&nbsp;即将放号</span>
       </div>
+      <div class="aboutTo" v-else-if="workTime.status==-1">
+        <span>{{workTime.workDate}}</span>
+        <span>&nbsp;停止挂号</span>
+      </div>
+      <div class="aboutTo" v-else-if="workTime.availableNumber==-1">
+        <span>{{workTime.workDate}}</span>
+        <span>&nbsp;预约人满</span>
+      </div>
       <!-- 展示医生的详情 -->
       <div class="doctor" v-else>
         <div class="morning">
@@ -101,7 +109,6 @@ let workTime = ref<any>({});
 let route = useRoute();
 let router = useRouter()
 onMounted(() => {
-  console.log(11);
   fetchWorkData();
 });
 const fetchWorkData = async () => {
@@ -253,7 +260,7 @@ const goStep2 = (doctor:Doctor) =>{
       margin-top: 20px;
 
       span:nth-child(1) {
-        color: #30c0f5;
+        color: #ff0000;
       }
 
       span:nth-child(2) {
