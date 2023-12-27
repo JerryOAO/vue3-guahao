@@ -11,7 +11,8 @@
       </template>
       <!--卡片内容-->
       <div class="user">
-        <Visitor @click="changeIndex(index)" v-for="(user,index) in userArr" :key="user.id" class="item cursor" :user="user" :index="index" :currentIndex="currentIndex"/>
+        <Visitor @click="changeIndex(index)" v-for="(user, index) in userArr" :key="user.id" class="item cursor"
+          :user="user" :index="index" :currentIndex="currentIndex" />
       </div>
     </el-card>
     <el-card class="box-card_bottom">
@@ -29,7 +30,7 @@
               就诊日期
             </div>
           </template>
-          {{doctorArr.workDate}}
+          {{ doctorArr.workDate }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -37,7 +38,7 @@
               就诊医院
             </div>
           </template>
-          {{doctorArr.param?.hosname}}
+          {{ doctorArr.param?.hosname }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -45,7 +46,7 @@
               就诊科室
             </div>
           </template>
-          {{doctorArr.param?.depname}}
+          {{ doctorArr.param?.depname }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -53,7 +54,7 @@
               医生姓名
             </div>
           </template>
-          {{doctorArr.docname}}
+          {{ doctorArr.docname }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -61,7 +62,7 @@
               医生职称
             </div>
           </template>
-          {{doctorArr.title}}
+          {{ doctorArr.title }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -69,7 +70,7 @@
               医生专长
             </div>
           </template>
-          {{doctorArr.skill}}
+          {{ doctorArr.skill }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -77,12 +78,13 @@
               医事服务费
             </div>
           </template>
-          <span style="color: red;">{{doctorArr.amount}}</span>
+          <span style="color: red;">{{ doctorArr.amount }}</span>
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
     <div class="btn">
-      <el-button type="primary" size="large">确认挂号</el-button>
+      <el-button type="primary" size="large" :disabled="currentIndex == -1 ? true : false" @click="submitOrder">确认挂号</el-button>
+      <div class="worring" v-if="currentIndex == -1 ? true : false">还未选择就诊人</div>
     </div>
   </div>
 </template>
@@ -90,14 +92,19 @@
 <script setup lang="ts">
 import { Plus } from '@element-plus/icons-vue'
 import Visitor from './visitor.vue'
-import { reqGetUser,reqGetDoctor } from '@/api';
+import { reqGetUser, reqGetDoctor } from '@/api';
+import { reqSubmitOrder } from '@/api/user'
+import { SubmitOrder } from '@/api/user/type'
 import { ref, onMounted } from 'vue';
-import { UserArr,UserResponseData,ScheduleResponseData } from '@/api/type';
+import { UserArr, UserResponseData, ScheduleResponseData } from '@/api/type';
 import { useRoute } from 'vue-router';
+import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 //已选择逻辑处理
 let currentIndex = ref<number>(-1)
-const changeIndex = (index:number) => {
+const changeIndex = (index: number) => {
   currentIndex.value = index
 }
 
@@ -109,16 +116,36 @@ onMounted(async () => {
   fetchDoctorData()
 })
 const fetchUserData = async () => {
-  const res:UserResponseData = await reqGetUser();
+  const res: UserResponseData = await reqGetUser();
   if (res.code === 200) {
     userArr.value = res.data
   }
 }
 const fetchDoctorData = async () => {
-  const res:ScheduleResponseData = await reqGetDoctor(route.query.docId as string);
-  console.log('res1',res)
+  const res: ScheduleResponseData = await reqGetDoctor(route.query.docId as string);
+  console.log('res1', res)
   if (res.code === 200) {
     doctorArr.value = res.data
+  }
+}
+//提交订单
+const submitOrder = async () => {
+  //医院编号
+  let hoscode = doctorArr.value.hoscode
+  //医生的ID
+  let scheduleId = doctorArr.value.id
+  //就诊人的ID
+  let patientId = userArr.value[currentIndex.value].id
+
+  let res:SubmitOrder = await reqSubmitOrder(hoscode, scheduleId, patientId)
+  if(res.code === 200){
+    router.push({path:'/user/order',query:{orderId:res.data}})
+    ElMessage.success('挂号成功')
+  }else{
+    ElMessage({
+      type:'error',
+      message:res.message
+    })
   }
 }
 </script>
@@ -135,23 +162,33 @@ const fetchDoctorData = async () => {
     margin-bottom: 20px;
     color: blue;
   }
-  .box-card_bottom{
-    margin-top: 20px; 
+
+  .box-card_bottom {
+    margin-top: 20px;
   }
+
   .btn {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+
     .el-button {
       width: 200px;
     }
+
+    .worring {
+      color: red;
+      margin-left: 20px;
+    }
   }
+
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   .user {
     display: flex;
     flex-wrap: wrap;
@@ -179,5 +216,4 @@ const fetchDoctorData = async () => {
       }
     }
   }
-}
-</style>
+}</style>

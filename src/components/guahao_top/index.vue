@@ -13,7 +13,7 @@
         </div>
         <p class="cursor" @click="login" v-if="!userStore.userInfo.name">登录/注册</p>
         <p v-else>
-          <el-dropdown trigger="click">
+          <el-dropdown trigger="click" @command="handleCommand">
             <span class="el-dropdown-link help">
               {{ userStore.userInfo.name }}
               <el-icon class="el-icon--right">
@@ -21,13 +21,13 @@
               </el-icon></span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item><el-icon>
+                <el-dropdown-item command="实名认证"><el-icon>
                     <User />
                   </el-icon>实名认证</el-dropdown-item>
-                <el-dropdown-item><el-icon>
+                <el-dropdown-item command="挂号订单"><el-icon>
                     <Tickets />
                   </el-icon>挂号订单</el-dropdown-item>
-                <el-dropdown-item><el-icon>
+                <el-dropdown-item command="就诊人管理"><el-icon>
                     <FirstAidKit />
                   </el-icon>就诊人管理</el-dropdown-item>
                 <el-dropdown-item @click="centerDialogVisible = true"><el-icon>
@@ -41,7 +41,8 @@
       </div>
     </div>
   </div>
-  <el-dialog v-model="centerDialogVisible" width="20%" align-center :modal="false" :lock-scroll="false" :close-on-click-modal="false">
+  <el-dialog v-model="centerDialogVisible" width="20%" align-center :modal="false" :lock-scroll="false"
+    :close-on-click-modal="false">
     <span>确定要退出账号吗？</span>
     <template #footer>
       <span class="dialog-footer">
@@ -96,9 +97,26 @@ const centerDialogVisible = ref(false)
 const logout = () => {
   centerDialogVisible.value = false
   userStore.logout()
-  ElMessage.success('退出账号成功！') 
+  ElMessage.success('退出账号成功！')
   //刷新当前页面
   window.location.reload()
+}
+
+//el-dropdown-item点击事件
+const handleCommand = (command: string) => {
+  switch (command) {
+    case '实名认证':
+      router.push('/user/certification')
+      break;
+    case '挂号订单':
+      router.push('/user/order')
+      break;
+    case '就诊人管理':
+      router.push('/user/patient')
+      break;
+    case '退出登录':
+      break;
+  }
 }
 </script>
 

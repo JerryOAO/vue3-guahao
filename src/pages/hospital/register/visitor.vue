@@ -21,7 +21,9 @@
           <li>当前住址：{{ user.param.cityString }}</li>
           <li>详细地址：{{ user.param.fullAddress }}</li>
         </ul>
-        <div class="select" v-if="index===currentIndex">已选择</div>
+        <transition name="select">
+          <div class="select" v-if="index===currentIndex">已选择</div>
+        </transition>
       </div>
     </el-card>
   </div>
@@ -91,7 +93,7 @@ defineProps(['user','index','currentIndex'])
         justify-content: space-between;
         align-items: center;
         font-size: 12px;
-        color: #7f7f7f;
+        // color: #7f7f7f;
         margin-bottom: 10px;
 
         &:last-child {
@@ -99,7 +101,7 @@ defineProps(['user','index','currentIndex'])
         }
       }
     }
-    // .select类似一个选中盖章效果
+    // .select居中
     .select{
       position: absolute;
       width: 150px;
@@ -109,13 +111,27 @@ defineProps(['user','index','currentIndex'])
       border: 1px dashed red;
       text-align: center;
       line-height: 150px;
-      left: 22%;
-      top: 13%;
       font-weight: bold;
       opacity: 0.5;
       transform: rotate(35deg);
       z-index: -1;
       font-size: 30px;
+      left: 50%;
+      top: 50%;
+      margin-left: -75px;
+      margin-top: -75px;
     }
+    .select-enter-from{
+      opacity: 0;
+    }
+    .select-enter-active,
+    .select-leave-active {
+      transition: all 0.5s;
+    }
+    .select-enter,
+    .select-leave-to {
+      opacity: 0;
+    }
+    
   }
 }</style>
