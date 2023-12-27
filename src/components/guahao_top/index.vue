@@ -97,6 +97,8 @@ const logout = () => {
   centerDialogVisible.value = false
   userStore.logout()
   ElMessage.success('退出账号成功！') 
+  //刷新当前页面
+  window.location.reload()
 }
 </script>
 

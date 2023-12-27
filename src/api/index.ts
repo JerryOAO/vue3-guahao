@@ -7,7 +7,7 @@
  * @Description: 这里填写描述
  */
 import request from "@/utils/request";
-import type { DoctorResponseData,HospitalWorkData, hospitalResponseData, HospitalLevelAndRegionResponseData, HospitalInfo, HospitalDetail, DepartmentResponseData, LoginData, UserLoginResponseData, WXLoginResponseData } from "./type";
+import type { DoctorResponseData,HospitalWorkData, hospitalResponseData, HospitalLevelAndRegionResponseData, HospitalInfo, HospitalDetail, DepartmentResponseData, LoginData, UserLoginResponseData, WXLoginResponseData,UserResponseData } from "./type";
 
 enum API {
   //获取医院列表接口
@@ -30,6 +30,8 @@ enum API {
   HOSPITALWORK_URL = "/hosp/hospital/auth/getBookingScheduleRule/",
   //医生排班数据
   HOSPITALDOCTOR_URL = "/hosp/hospital/auth/findScheduleList/",
+  //获取就诊人信息
+  GETUSER_URL = '/user/patient/auth/findAll',
 }
 //获取医院数据
 export const reqHospital = (page: number, limit: number, hostype = "", districtCode = "") => request.get<any, hospitalResponseData>(API.HOSPITAL_URL + `${page}/${limit}?hostype=${hostype}&districtCode=${districtCode}`);
@@ -51,3 +53,5 @@ export const reqWxLogin = (wxRedirectUrl: string) => request.get<any, WXLoginRes
 export const reqHospitalWork = (page: number, limit: number, hoscode: string, depcode: string) => request.get<any, HospitalWorkData>(API.HOSPITALWORK_URL + `${page}/${limit}/${hoscode}/${depcode}`);
 //医生排班数据
 export const reqHospitalDoctor = (hoscode: string, depcode: string, workDate: string) => request.get<any, DoctorResponseData>(API.HOSPITALDOCTOR_URL + `${hoscode}/${depcode}/${workDate}`);
+//获取就诊人信息
+export const reqGetUser = () => request.get<any, UserResponseData>(API.GETUSER_URL)

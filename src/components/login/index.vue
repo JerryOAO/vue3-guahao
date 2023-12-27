@@ -174,6 +174,8 @@ const login = async () => {
   //登录失败：弹出登录失败错误信息
   try {
     await userStore.userLogin(loginParam)
+    //登录成功 刷新当前页面
+    window.location.reload()
     closeLogin()
   } catch (error) {
     //登录失败
@@ -202,19 +204,6 @@ const close = () => {
   //重置表单
   form.value.resetFields()
 }
-
-//二维码登录
-// watch(()=>tag.value,(val:number)=>{
-//   if(val===1){
-//     userStore.queryState()
-//   }
-// })
-//监听localstorage中userinfo是否有变化
-// watch(()=>userStore.userInfo,(val:any)=>{
-//   if(val){
-//     userStore.queryState()
-//   }
-// })
 
 </script>
 
