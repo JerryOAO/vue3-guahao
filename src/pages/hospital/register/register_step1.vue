@@ -85,7 +85,7 @@
           <!-- 右侧挂号费用 -->
           <div class="right">
             <span>￥{{ doctor.amount }}</span>
-            <el-button type="primary">剩余{{doctor.availableNumber}}</el-button>
+            <el-button type="primary" @click="goStep2(doctor)">剩余{{doctor.availableNumber}}</el-button>
           </div>
         </div>
       </div>

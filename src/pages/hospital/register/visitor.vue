@@ -21,6 +21,7 @@
           <li>当前住址：{{ user.param.cityString }}</li>
           <li>详细地址：{{ user.param.fullAddress }}</li>
         </ul>
+        <div class="select" v-if="index===currentIndex">已选择</div>
       </div>
     </el-card>
   </div>
@@ -28,9 +29,9 @@
 
 <script setup lang="ts">
 import { Edit } from '@element-plus/icons-vue'
-
 // 接收父组件传递的就诊人信息
-defineProps(['user'])
+defineProps(['user','index','currentIndex'])
+
 
 </script>
 
@@ -78,6 +79,8 @@ defineProps(['user'])
   }
 
   .bottom {
+    position: relative;
+    z-index: 99;
     ul {
       display: flex;
       flex-direction: column;
@@ -95,6 +98,24 @@ defineProps(['user'])
           margin-bottom: 0px;
         }
       }
+    }
+    // .select类似一个选中盖章效果
+    .select{
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      color: red;
+      border-radius: 50%;
+      border: 1px dashed red;
+      text-align: center;
+      line-height: 150px;
+      left: 22%;
+      top: 13%;
+      font-weight: bold;
+      opacity: 0.5;
+      transform: rotate(35deg);
+      z-index: -1;
+      font-size: 30px;
     }
   }
 }</style>

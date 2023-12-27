@@ -11,7 +11,7 @@
       </template>
       <!--卡片内容-->
       <div class="user">
-        <Visitor v-for="user in userArr" :key="user.id" class="item" :user="user"/>
+        <Visitor @click="changeIndex(index)" v-for="(user,index) in userArr" :key="user.id" class="item cursor" :user="user" :index="index" :currentIndex="currentIndex"/>
       </div>
     </el-card>
     <el-card class="box-card_bottom">
@@ -29,7 +29,7 @@
               就诊日期
             </div>
           </template>
-          xxxxxxxx
+          {{doctorArr.workDate}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -37,7 +37,7 @@
               就诊医院
             </div>
           </template>
-          xxxxxxxx
+          {{doctorArr.param?.hosname}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -45,7 +45,7 @@
               就诊科室
             </div>
           </template>
-          xxxxxxxx
+          {{doctorArr.param?.depname}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -53,7 +53,7 @@
               医生姓名
             </div>
           </template>
-          xxxxxxxx
+          {{doctorArr.docname}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -61,7 +61,7 @@
               医生职称
             </div>
           </template>
-          xxxxxxxx
+          {{doctorArr.title}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -69,7 +69,7 @@
               医生专长
             </div>
           </template>
-          xxxxxxxx
+          {{doctorArr.skill}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
@@ -77,7 +77,7 @@
               医事服务费
             </div>
           </template>
-          <span style="color: red;">100</span>
+          <span style="color: red;">{{doctorArr.amount}}</span>
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -90,18 +90,35 @@
 <script setup lang="ts">
 import { Plus } from '@element-plus/icons-vue'
 import Visitor from './visitor.vue'
-import { reqGetUser } from '@/api';
+import { reqGetUser,reqGetDoctor } from '@/api';
 import { ref, onMounted } from 'vue';
-import { UserArr,UserResponseData } from '@/api/type';
+import { UserArr,UserResponseData,ScheduleResponseData } from '@/api/type';
+import { useRoute } from 'vue-router';
+
+//已选择逻辑处理
+let currentIndex = ref<number>(-1)
+const changeIndex = (index:number) => {
+  currentIndex.value = index
+}
 
 const userArr = ref<UserArr>([])
+const doctorArr = ref<any>({})
+let route = useRoute()
 onMounted(async () => {
   fetchUserData()
+  fetchDoctorData()
 })
 const fetchUserData = async () => {
   const res:UserResponseData = await reqGetUser();
   if (res.code === 200) {
     userArr.value = res.data
+  }
+}
+const fetchDoctorData = async () => {
+  const res:ScheduleResponseData = await reqGetDoctor(route.query.docId as string);
+  console.log('res1',res)
+  if (res.code === 200) {
+    doctorArr.value = res.data
   }
 }
 </script>

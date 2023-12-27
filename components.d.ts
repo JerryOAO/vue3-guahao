@@ -30,7 +30,6 @@ declare module 'vue' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElRow: typeof import('element-plus/es')['ElRow']
-    ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     Guahao_bottom: typeof import('./src/components/guahao_bottom/index.vue')['default']
     Guahao_top: typeof import('./src/components/guahao_top/index.vue')['default']

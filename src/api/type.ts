@@ -225,40 +225,45 @@ export interface DoctorResponseData extends ResponseData {
 
 
 export interface User {
-  id:number,
-  createTime:string,
-  updateTime:string,
-  isDeleted:number,
-  param:{
-    certificatesTypeString:string,
-    contactsCertificatesTypeString:string,
-    cityString:string,
-    fullAddress:string,
-    districtString:string,
-    provinceString:string,
+  id: number,
+  createTime: string,
+  updateTime: string,
+  isDeleted: number,
+  param: {
+    certificatesTypeString: string,
+    contactsCertificatesTypeString: string,
+    cityString: string,
+    fullAddress: string,
+    districtString: string,
+    provinceString: string,
   },
-  userId:number,
-  name:string,
-  certificatesType:string,
-  certficatesNo:string,
-  sex:number,
-  birthdate:string,
-  phone:string,
-  isMarry:number,
-  provinceCode:string,
-  cityCode:string,
-  districtCode:string,
-  address:string,
-  contactsName:string,
-  contactsCertificatesType:string,
-  contactsCertificatesNo:string,
-  contactsPhone:string,
-  isInsure:number,
-  cardNo:string,
-  status:string
+  userId: number,
+  name: string,
+  certificatesType: string,
+  certficatesNo: string,
+  sex: number,
+  birthdate: string,
+  phone: string,
+  isMarry: number,
+  provinceCode: string,
+  cityCode: string,
+  districtCode: string,
+  address: string,
+  contactsName: string,
+  contactsCertificatesType: string,
+  contactsCertificatesNo: string,
+  contactsPhone: string,
+  isInsure: number,
+  cardNo: string,
+  status: string
 }
 
 export type UserArr = User[];
 export interface UserResponseData extends ResponseData {
-  data:UserArr;
+  data: UserArr;
+}
+
+//根据排班id获取排班数据
+export interface ScheduleResponseData extends ResponseData {
+  data: Doctor;
 }

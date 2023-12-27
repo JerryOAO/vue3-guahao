@@ -1,32 +1,28 @@
-interface RootObject {
-  code: number;
-  message: string;
-  data: Datum[];
-  ok: boolean;
-}
-
-interface Datum {
-  id: string;
-  createTime: string;
-  updateTime: string;
-  isDeleted: number;
-  param: Param;
-  hoscode: string;
-  depcode: string;
-  title: string;
-  docname: string;
-  skill: string;
-  workDate: string;
-  workTime: number;
-  reservedNumber: number;
-  availableNumber: number;
-  amount: number;
-  status: number;
-  hosScheduleId: string;
-}
-
-interface Param {
-  dayOfWeek: string;
-  depname: string;
-  hosname: string;
+{
+  "code": 200,
+  "message": "成功",
+  "data": {
+    "id": "6582a89ec014d563e32129b0",
+    "createTime": "2023-07-31 11:47:12",
+    "updateTime": "2023-07-31 11:47:12",
+    "isDeleted": 0,
+    "param": {
+      "dayOfWeek": "周五",
+      "depname": "多发性硬化专科门诊",
+      "hosname": "首都医科大学附属北京安贞医院"
+    },
+    "hoscode": "1000_16",
+    "depcode": "200040878_16",
+    "title": "副主任医师",
+    "docname": "裴育",
+    "skill": "骨质疏松和骨代谢疾病、糖尿病、甲状腺疾病。",
+    "workDate": "2023-12-29",
+    "workTime": 0,
+    "reservedNumber": 40,
+    "availableNumber": 39,
+    "amount": 100,
+    "status": 1,
+    "hosScheduleId": "1685859632003874818"
+  },
+  "ok": true
 }
