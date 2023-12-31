@@ -1,14 +1,14 @@
-export interface ResponseData{
-  code:number,
-  message:string,
-  ok:boolean
+export interface ResponseData {
+  code: number;
+  message: string;
+  ok: boolean;
 }
 //提交订单接口
-export interface SubmitOrder extends ResponseData{
-  data:number
+export interface SubmitOrder extends ResponseData {
+  data: number;
 }
 
-export interface OrderInfo{
+export interface OrderInfo {
   id: number;
   createTime: string;
   updateTime: string;
@@ -38,6 +38,70 @@ export interface OrderInfo{
   orderStatus: number;
 }
 //获取订单详情接口
-export interface OrderResponseData extends ResponseData{
-  data:OrderInfo
+export interface OrderResponseData extends ResponseData {
+  data: OrderInfo;
+}
+
+//支付二维码返回接口
+export interface Qrcode {
+  codeUrl: string;
+  orderId: number;
+  totalFee: number;
+  resultCode: string;
+}
+export interface QrcodeResponseData extends ResponseData {
+  data: Qrcode;
+}
+
+//查询支付状态
+export interface PayStatusResponseData extends ResponseData {
+  data: boolean;
+}
+
+//会员信息数据类型
+export interface Member {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
+  param: {};
+  openid: string;
+  nickname: string;
+  phone: string;
+  name: string;
+  certificatesType: string;
+  certificatesNo: string;
+  certificatesUrl: string;
+  authStatus: number;
+  status: number;
+}
+//接口返回的会员信息数据类型
+export interface MemberResponseData extends ResponseData {
+  data: Member;
+}
+
+//证件类型数据类型
+export interface CertificatesType {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
+  param: {};
+  parentId: number;
+  name: string;
+  value: string;
+  dictCode: string;
+  hasChildren: boolean;
+}
+export type CertationArr = CertificatesType[];
+export interface CertificatesTypeResponseData extends ResponseData {
+  data: CertationArr;
+}
+
+//用户认证的ts类型
+export interface UserParams {
+  certificatesNo: string;
+  certificatesType: string;
+  certificatesUrl: string;
+  name: string;
 }
