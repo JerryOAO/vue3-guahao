@@ -10,7 +10,7 @@
         <Icon icon="fa6-solid:id-card" />
         <p>完成实名认证后才能添加就诊人，正常进行挂号，为了不影响后续步骤，建议提前实名认证。</p>
       </div>
-      <div class="descriptions" v-if="memberInfo.authStatus">
+      <div class="descriptions" v-if="memberInfo.authStatus==1">
         <el-descriptions border column="1">
           <el-descriptions-item label="用户姓名" label-align="center"
             label-class-name="test">{{ memberInfo.name }}</el-descriptions-item>
@@ -20,7 +20,7 @@
             label-class-name="test">{{ memberInfo.certificatesNo }}</el-descriptions-item>
         </el-descriptions>
       </div>
-      <el-form class="forms" label-width="80" v-else>
+      <el-form class="forms" label-width="80" v-if="memberInfo.authStatus==0">
         <el-form-item label="证件类型">
           <el-select placeholder="请选择证件类型" v-model="params.certificatesType">
             <el-option :label="item.name" :value="item.value" v-for="(item, index) in arrType" :key="index"></el-option>
@@ -57,7 +57,6 @@ import { reqGetMember, reqCertificatesType, reqUserCertation } from '@/api/user'
 import type { MemberResponseData, CertationArr, UserParams } from '@/api/user/type';
 import { onMounted, reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
-import { dataType } from 'element-plus/es/components/table-v2/src/common';
 
 let memberInfo = ref<any>([]);
 let arrType = ref<CertationArr>([]);
@@ -155,7 +154,7 @@ const submit = async () => {
 .descriptions {
   margin-top: 20px;
   width: 50%;
-
+  padding: 20px;
   :deep(.test) {
     width: 100px !important;
   }

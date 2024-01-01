@@ -208,7 +208,7 @@ const close = () => {
 </script>
 
 <style scoped>
-::v-deep .el-dialog__body {
+:deep(.el-dialog__body) {
   border-top: 1px solid #d8d8da;
   border-bottom: 1px solid #d8d8da;
 }
@@ -265,7 +265,7 @@ const close = () => {
   }
 }
 
-::v-deep .el-form-item__content {
+:deep(.el-form-item__content) {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -300,12 +300,12 @@ const close = () => {
   }
 }
 
-::v-deep iframe {
+:deep(iframe) {
   width: 100%;
   height: 240px;
 }
 
-::v-deep iframe img {
+:deep(iframe img) {
   max-width: 100%;
   height: auto;
 }</style>

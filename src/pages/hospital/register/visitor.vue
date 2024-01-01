@@ -38,7 +38,7 @@ defineProps(['user','index','currentIndex'])
 </script>
 
 <style scoped lang="scss">
-::v-deep(.el-card__body) {
+:deep(.el-card__body) {
   padding: 0px;
 }
 

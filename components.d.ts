@@ -9,10 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Countdown: typeof import('./src/components/countdown/index.vue')['default']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
-    ElButtom: typeof import('element-plus/es')['ElButtom']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElButttom: typeof import('element-plus/es')['ElButttom']
-    ElButtton: typeof import('element-plus/es')['ElButtton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
@@ -35,7 +32,6 @@ declare module 'vue' {
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
-    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTag: typeof import('element-plus/es')['ElTag']

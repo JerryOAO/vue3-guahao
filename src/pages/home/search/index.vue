@@ -50,7 +50,7 @@ const goDetail = (item:any) => {
   align-items: center;
   margin-top: 20px;
 
-  ::v-deep(.el-input__wrapper) {
+  :deep(.el-input__wrapper) {
     width: 600px;
     margin-right: 10px;
   }
