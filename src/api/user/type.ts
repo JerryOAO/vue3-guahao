@@ -1,3 +1,4 @@
+import { OrderInfo } from './type';
 export interface ResponseData {
   code: number;
   message: string;
@@ -97,11 +98,24 @@ export type CertationArr = CertificatesType[];
 export interface CertificatesTypeResponseData extends ResponseData {
   data: CertationArr;
 }
-
 //用户认证的ts类型
 export interface UserParams {
   certificatesNo: string;
   certificatesType: string;
   certificatesUrl: string;
   name: string;
+}
+
+export type Records = OrderInfo[];
+export interface OrderInfoResponseData extends ResponseData {
+  data:{
+    records: Records;
+    total: number;
+    size: number;
+    current: number;
+    orders: any[];
+    hitCount: boolean;
+    searchCount: boolean;
+    pages: number;
+  }
 }

@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import type { SubmitOrder,OrderResponseData,QrcodeResponseData,PayStatusResponseData,MemberResponseData,CertificatesTypeResponseData,UserParams } from "./type";
+import type { SubmitOrder,OrderResponseData,QrcodeResponseData,PayStatusResponseData,MemberResponseData,CertificatesTypeResponseData,UserParams,OrderInfoResponseData } from "./type";
 
 enum API {
   //提交订单 获取订单号接口
@@ -17,7 +17,9 @@ enum API {
   //获取证件类型接口
   CERTIFICATES_TYPE = '/cmn/dict/findByDictCode/',
   //用户认证
-  USERCERTATION_URL = '/user/auth/userAuah'
+  USERCERTATION_URL = '/user/auth/userAuah',
+  //挂号订单接口
+  ORDER_INFO = '/order/orderInfo/auth/',
 }
 
 //提交订单
@@ -43,3 +45,6 @@ export const reqCertificatesType = (CertificatesType='CertificatesType') => requ
 
 //用户认证
 export const reqUserCertation = (data: UserParams) => request.post<any>(API.USERCERTATION_URL,data)
+
+//获取挂号订单
+export const reqOrderInfo = (page: number,limit:number,patientId:string,orderStatus:string) => request.get<any,OrderInfoResponseData>(API.ORDER_INFO + `${page}/${limit}?patientId=${patientId}&orderStatus=${orderStatus}`)

@@ -8,41 +8,84 @@
       </template>
       <div class="tip">
         <Icon icon="fa6-solid:id-card" />
-        <p>完成实名认证后才能添加就诊人，正常进行挂号，为了不影响后续步骤，建议提前实名认证。</p>
+        <p>
+          完成实名认证后才能添加就诊人，正常进行挂号，为了不影响后续步骤，建议提前实名认证。
+        </p>
       </div>
-      <div class="descriptions" v-if="memberInfo.authStatus==1">
+      <div class="descriptions" v-if="memberInfo.authStatus == 1">
         <el-descriptions border column="1">
-          <el-descriptions-item label="用户姓名" label-align="center"
-            label-class-name="test">{{ memberInfo.name }}</el-descriptions-item>
-          <el-descriptions-item label="证件类型" label-align="center"
-            label-class-name="test">{{ memberInfo.certificatesType == 10 ? '身份证' : '户口本' }}</el-descriptions-item>
-          <el-descriptions-item label="证件号码" label-align="center"
-            label-class-name="test">{{ memberInfo.certificatesNo }}</el-descriptions-item>
+          <el-descriptions-item
+            label="用户姓名"
+            label-align="center"
+            label-class-name="test"
+            >{{ memberInfo.name }}</el-descriptions-item
+          >
+          <el-descriptions-item
+            label="证件类型"
+            label-align="center"
+            label-class-name="test"
+            >{{
+              memberInfo.certificatesType == 10 ? "身份证" : "户口本"
+            }}</el-descriptions-item
+          >
+          <el-descriptions-item
+            label="证件号码"
+            label-align="center"
+            label-class-name="test"
+            >{{ memberInfo.certificatesNo }}</el-descriptions-item
+          >
         </el-descriptions>
       </div>
-      <el-form class="forms" label-width="80" v-if="memberInfo.authStatus==0">
-        <el-form-item label="证件类型">
+      <el-form
+        class="forms"
+        label-width="80"
+        v-if="memberInfo.authStatus == 0"
+        :model="params"
+        :rules="rules"
+        ref="form"
+      >
+        <el-form-item label="证件类型" prop="certificatesType">
           <el-select placeholder="请选择证件类型" v-model="params.certificatesType">
-            <el-option :label="item.name" :value="item.value" v-for="(item, index) in arrType" :key="index"></el-option>
+            <el-option
+              :label="item.name"
+              :value="item.value"
+              v-for="(item, index) in arrType"
+              :key="index"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户姓名">
+        <el-form-item label="用户姓名" prop="name">
           <el-input placeholder="请输入用户姓名" v-model="params.name"></el-input>
         </el-form-item>
-        <el-form-item label="证件号码">
-          <el-input placeholder="请输入证件号码" v-model="params.certificatesNo"></el-input>
+        <el-form-item label="证件号码" prop="certificatesNo">
+          <el-input
+            placeholder="请输入证件号码"
+            v-model="params.certificatesNo"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="上传证件">
-          <el-upload list-type="picture-card" ref="upload" :on-remove="handleRemove"
-            :on-preview="handlePictureCardPreview" :on-success="successhandler" :on-exceed="exceedhandler"
-            action="/api/oss/file/fileUpload?fileHost=userAuah" :limit="1">
+        <el-form-item label="上传证件" prop="certificatesUrl">
+          <el-upload
+            list-type="picture-card"
+            ref="upload"
+            :on-remove="handleRemove"
+            :on-preview="handlePictureCardPreview"
+            :on-success="successhandler"
+            :on-exceed="exceedhandler"
+            action="/api/oss/file/fileUpload?fileHost=userAuah"
+            :limit="1"
+          >
             <Icon icon="line-md:uploading-loop" width="100" height="100" />
           </el-upload>
           <el-dialog v-model="dialogVisible">
-            <img w-full style="width:100%;height:100%" :src="params.certificatesUrl" alt="Preview Image" />
+            <img
+              w-full
+              style="width: 100%; height: 100%"
+              :src="params.certificatesUrl"
+              alt="Preview Image"
+            />
           </el-dialog>
         </el-form-item>
-        <el-form-item label="">
+        <el-form-item>
           <el-button type="primary" @click="submit">提交</el-button>
           <el-button type="danger" @click="reset">重置</el-button>
         </el-form-item>
@@ -52,11 +95,11 @@
 </template>
 
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
-import { reqGetMember, reqCertificatesType, reqUserCertation } from '@/api/user';
-import type { MemberResponseData, CertationArr, UserParams } from '@/api/user/type';
-import { onMounted, reactive, ref } from 'vue';
-import { ElMessage } from 'element-plus';
+import { Icon } from "@iconify/vue";
+import { reqGetMember, reqCertificatesType, reqUserCertation } from "@/api/user";
+import type { MemberResponseData, CertationArr, UserParams } from "@/api/user/type";
+import { onMounted, reactive, ref } from "vue";
+import { ElMessage } from "element-plus";
 
 let memberInfo = ref<any>([]);
 let arrType = ref<CertationArr>([]);
@@ -77,28 +120,45 @@ const getMember = async () => {
   const res: MemberResponseData = await reqGetMember();
   if (res.code == 200) {
     memberInfo.value = res.data;
-    console.log('memberInfo.value', memberInfo.value.authStatus)
+    console.log("memberInfo.value", memberInfo.value.authStatus);
   }
 };
 
 let params = reactive<UserParams>({
-  certificatesNo: '',
-  certificatesType: '',
-  certificatesUrl: '',
-  name: ''
-})
-
+  certificatesNo: "",
+  certificatesType: "",
+  certificatesUrl: "",
+  name: "",
+});
+let form = ref()
+const rules = {
+  certificatesType: [
+    { required: true, message: "请选择证件类型", trigger: "change" },
+  ],
+  name: [{ required: true, message: "请输入用户姓名", trigger: "blur" }],
+  certificatesNo: [
+    { required: true, message: "请输入证件号码", trigger: "blur" },
+    //身份证需为18位
+    {
+      pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+      message: "证件号码格式不正确",
+      trigger: "blur",
+    },
+  ],
+  certificatesUrl: [{ required: true, message: "请上传证件", trigger: "change" }],
+};
 //超出限制
 const exceedhandler = () => {
   ElMessage({
-    type: 'error',
-    message: '图片只能上传1账'
-  })
+    type: "error",
+    message: "图片只能上传1账",
+  });
 };
 
 const successhandler = (response: any) => {
   if (response.code == 200) {
     params.certificatesUrl = response.data;
+    form.value.validateField('certificatesUrl')
   }
 };
 
@@ -107,35 +167,36 @@ const handlePictureCardPreview = () => {
 };
 
 const handleRemove = () => {
-  params.certificatesUrl = '';
+  params.certificatesUrl = "";
 };
 
 const reset = () => {
   upload.value.clearFiles();
   Object.assign(params, {
-    certificatesNo: '',
-    certificatesType: '',
-    certificatesUrl: '',
-    name: ''
-  })
+    certificatesNo: "",
+    certificatesType: "",
+    certificatesUrl: "",
+    name: "",
+  });
 };
 
 const submit = async () => {
+  await form.value.validate()
   try {
-    let res = await reqUserCertation(params);
-    if (res.data.code == 200) {
+    let res:any = await reqUserCertation(params);
+    console.log(res)
+    if (res.code == 200) {
       ElMessage({
-      type: 'success',
-      message: '认证成功'
-    })
+        type: "success",
+        message: "认证成功",
+      });
     }
     getMember();
-  } catch (error) {
-    let res = await reqUserCertation(params);
+  } catch (error:any) {
     ElMessage({
-      type: 'error',
-      message: res.message
-    })
+      type: "error",
+      message: error.message,
+    });
   }
 };
 </script>
@@ -155,6 +216,7 @@ const submit = async () => {
   margin-top: 20px;
   width: 50%;
   padding: 20px;
+
   :deep(.test) {
     width: 100px !important;
   }
@@ -164,4 +226,5 @@ const submit = async () => {
   margin-top: 20px;
   width: 60%;
   margin: 20px auto;
-}</style>
+}
+</style>
