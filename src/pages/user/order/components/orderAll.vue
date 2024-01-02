@@ -65,7 +65,7 @@ import type { OrderInfoResponseData,Records } from '@/api/user/type';
 
 let router = useRouter()
 let pageNo = ref<number>(1)
-let pageSize = ref<number>(10)
+let pageSize = ref<number>(5)
 let patientId = ref<string>('')
 let orderStatus = ref<string>('')
 let allOrderArr = ref<Records>([])

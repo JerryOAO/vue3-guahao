@@ -2,7 +2,7 @@
   <div class="hospital">
     <div class="menu">
       <div class="tips">
-       <span><el-icon><List /></el-icon></span><span>丨 医院详情</span>
+       <span>医院详情</span>
       </div>
       <el-menu
         :default-active="route.path"
@@ -74,33 +74,35 @@ onMounted(() => {
     justify-content: center;
     font-size: 20px;
     font-weight: bold;
-    // color: #7f7f7f;
-    height: 80px;
+    height: 60px;
     width: 100%;
     border-bottom: 1px solid #ebebeb;
   }
   .menu {
-    flex: 2;
-    border-right: 1px solid #ebebeb;
+    // flex: 1;
+    // border-right: 1px solid #ebebeb;
     .el-menu-vertical-demo {
       width: 100%;
       border: none;
       background-color: #fff;
       .el-menu-item {
+        padding-left: 4px;
+        border-left: 4px solid transparent;
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
         font-weight: bold;
         color: #7f7f7f;
-        height: 80px;
-        width: 100%;
-        border-bottom: 1px solid #ebebeb;
+        width: 150px;
         &:hover {
           background-color: #f5f5f5;
+          border-left: 4px solid rgb(45, 122, 246);
         }
         &.is-active {
           background-color: #f5f5f5;
+          border-left: 4px solid rgb(45, 122, 246);
+          color: rgb(45, 122, 246);
         }
       }
     }
@@ -110,23 +112,6 @@ onMounted(() => {
   .content {
     flex: 8;
     padding: 20px;
-  }
-}
-.el-menu-item{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  color: #7f7f7f;
-  height: 80px;
-  width: 100%;
-  border-bottom: 1px solid #ebebeb;
-  &:hover{
-    background-color: #f5f5f5;
-  }
-  &.is-active{
-    background-color: #f5f5f5;
   }
 }
 </style>

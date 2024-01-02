@@ -2,7 +2,7 @@
   <div class="hospital">
     <div class="menu">
       <div class="tips">
-       <span></span><el-icon><GoldMedal /></el-icon><span>丨 会员中心</span>
+       <span>会员中心</span>
       </div>
       <el-menu
         :default-active="route.path"
@@ -39,9 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { GoldMedal, Postcard, ToiletPaper, Files, PriceTag,Management } from "@element-plus/icons-vue";
+import { Postcard, ToiletPaper, Files, PriceTag,Management } from "@element-plus/icons-vue";
 import { useRoute,useRouter } from "vue-router";
-import { onMounted } from "vue";
 
 let route = useRoute();
 let router = useRouter()
@@ -62,33 +61,34 @@ console.log('route',route.path)
     justify-content: center;
     font-size: 20px;
     font-weight: bold;
-    color: #7f7f7f;
-    height: 80px;
+    height: 60px;
     width: 100%;
     border-bottom: 1px solid #ebebeb;
   }
   .menu {
-    flex: 2;
-    border-right: 1px solid #ebebeb;
+    // flex: 1;
+    // border-right: 1px solid #ebebeb;
     .el-menu-vertical-demo {
       width: 100%;
       border: none;
       background-color: #fff;
       .el-menu-item {
+        padding-left: 4px;
+        border-left: 4px solid transparent;
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
         font-weight: bold;
         color: #7f7f7f;
-        height: 80px;
-        width: 100%;
-        border-bottom: 1px solid #ebebeb;
+        width: 150px;
         &:hover {
           background-color: #f5f5f5;
+          border-left: 4px solid rgb(45, 122, 246);
         }
         &.is-active {
           background-color: #f5f5f5;
+          border-left: 4px solid rgb(45, 122, 246);
           color: rgb(45, 122, 246);
         }
       }
@@ -101,5 +101,4 @@ console.log('route',route.path)
     padding: 20px;
   }
 }
-
 </style>

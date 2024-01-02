@@ -119,3 +119,53 @@ export interface OrderInfoResponseData extends ResponseData {
     pages: number;
   }
 }
+
+//获取全部就诊人的ts类型
+export interface User {
+  id: number,
+  createTime: string,
+  updateTime: string,
+  isDeleted: number,
+  param: {
+    certificatesTypeString: string,
+    contactsCertificatesTypeString: string,
+    cityString: string,
+    fullAddress: string,
+    districtString: string,
+    provinceString: string,
+  },
+  userId: number,
+  name: string,
+  certificatesType: string,
+  certficatesNo: string,
+  sex: number,
+  birthdate: string,
+  phone: string,
+  isMarry: number,
+  provinceCode: string,
+  cityCode: string,
+  districtCode: string,
+  address: string,
+  contactsName: string,
+  contactsCertificatesType: string,
+  contactsCertificatesNo: string,
+  contactsPhone: string,
+  isInsure: number,
+  cardNo: string,
+  status: string
+}
+
+export type UserArr = User[];
+
+export interface UserResponseData extends ResponseData {
+  data: UserArr;
+}
+
+export interface OrderState{
+  comment:string;
+  status:number;
+}
+export type AllOrderState = OrderState[]
+export interface AllOrderStateResponseData extends ResponseData {
+  data: AllOrderState;
+}

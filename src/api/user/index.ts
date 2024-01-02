@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import type { SubmitOrder,OrderResponseData,QrcodeResponseData,PayStatusResponseData,MemberResponseData,CertificatesTypeResponseData,UserParams,OrderInfoResponseData } from "./type";
+import type { SubmitOrder,OrderResponseData,QrcodeResponseData,PayStatusResponseData,MemberResponseData,CertificatesTypeResponseData,UserParams,OrderInfoResponseData,UserResponseData,AllOrderStateResponseData } from "./type";
 
 enum API {
   //提交订单 获取订单号接口
@@ -54,6 +54,6 @@ export const reqUserCertation = (data: UserParams) => request.post<any>(API.USER
 export const reqOrderInfo = (page: number,limit:number,patientId:string,orderStatus:string) => request.get<any,OrderInfoResponseData>(API.ORDER_INFO + `${page}/${limit}?patientId=${patientId}&orderStatus=${orderStatus}`)
 
 //获取就诊人
-export const reqPatientList = () => request.get<any>(API.PATIENT_LIST)
+export const reqPatientList = () => request.get<any,UserResponseData>(API.PATIENT_LIST)
 //获取订单状态
-export const reqOrderStatus = () => request.get<any>(API.ORDER_STATUS)
+export const reqOrderStatus = () => request.get<any,AllOrderStateResponseData>(API.ORDER_STATUS)

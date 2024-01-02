@@ -51,14 +51,17 @@
           </li>
         </ul>
       </div>
-      <div class="departmentInfo">
-        <div class="showDepartment" v-for="(department) in hospitalStore.departmentArr" :key="department.depcode">
-          <h1 class="cur">{{ department.depname }}</h1>
-          <ul>
-            <li @click="showLogin(item)" v-for="(item) in department.children" :key="item.depcode">{{ item.depname }}</li>
-          </ul>
+     
+        <div class="departmentInfo">
+          <div class="showDepartment" v-for="(department) in hospitalStore.departmentArr" :key="department.depcode">
+            <h1 class="cur">{{ department.depname }}</h1>
+            <ul>
+              <li @click="showLogin(item)" v-for="(item) in department.children" :key="item.depcode">{{ item.depname }}
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -67,7 +70,7 @@
 //引入仓库数据
 import useDetailStore from "@/store/modules/hospitalDetail.ts";
 import { ref } from "vue";
-import { useRouter,useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 // import useUserStore from "@/store/modules/user.ts";
 // let userStore = useUserStore();
 let router = useRouter();
@@ -87,13 +90,13 @@ const changeIndex = (index: number) => {
   });
 };
 
-const showLogin = (item:any) => {
+const showLogin = (item: any) => {
   // userStore.visiable = true;
-  router.push({path:'/hospital/register_step1',query:{hoscode:route.query.hoscode,depcode:item.depcode}})
+  router.push({ path: '/hospital/register_step1', query: { hoscode: route.query.hoscode, depcode: item.depcode } })
 };
 </script>
 <style scoped>
-.tip{
+.tip {
   /* background-color: black; */
   /* color: white; */
   width: 100%;
@@ -102,7 +105,9 @@ const showLogin = (item:any) => {
   font-weight: bold;
   text-align: center;
 }
-.register { 
+
+.register {
+
   .top {
     display: flex;
     margin: 20px 20px;
@@ -175,15 +180,18 @@ const showLogin = (item:any) => {
         }
       }
     }
+
     /* departmentInfo和leftNav高度一致 */
     .departmentInfo {
       flex: 1;
       background-color: #f5f5f5;
       height: 500px;
       overflow: auto;
+
       &::-webkit-scrollbar {
         display: none;
       }
+
       /* 每行显示3个showDepartment */
       .showDepartment {
         display: flex;
@@ -210,6 +218,7 @@ const showLogin = (item:any) => {
             padding: 10px 20px;
             cursor: pointer;
             flex-wrap: nowrap;
+
             &:hover {
               background-color: #fff;
             }
@@ -218,5 +227,4 @@ const showLogin = (item:any) => {
       }
     }
   }
-}
-</style>
+}</style>
