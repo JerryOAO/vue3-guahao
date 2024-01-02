@@ -20,6 +20,10 @@ enum API {
   USERCERTATION_URL = '/user/auth/userAuah',
   //挂号订单接口
   ORDER_INFO = '/order/orderInfo/auth/',
+  //获取就诊人接口
+  PATIENT_LIST = '/user/patient/auth/findAll',
+  //获取订单状态
+  ORDER_STATUS = '/order/orderInfo/auth/getStatusList',
 }
 
 //提交订单
@@ -48,3 +52,8 @@ export const reqUserCertation = (data: UserParams) => request.post<any>(API.USER
 
 //获取挂号订单
 export const reqOrderInfo = (page: number,limit:number,patientId:string,orderStatus:string) => request.get<any,OrderInfoResponseData>(API.ORDER_INFO + `${page}/${limit}?patientId=${patientId}&orderStatus=${orderStatus}`)
+
+//获取就诊人
+export const reqPatientList = () => request.get<any>(API.PATIENT_LIST)
+//获取订单状态
+export const reqOrderStatus = () => request.get<any>(API.ORDER_STATUS)
