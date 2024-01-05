@@ -6,22 +6,22 @@
           <span>挂号订单</span>
         </div>
       </template>
-      <el-form inline="true">
-        <el-form-item label="就诊人">
-          <el-select placeholder="请选择就诊人">
-            <el-option label="测试"></el-option>
-            <el-option label="你好"></el-option>
-            <el-option label="杰瑞"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="订单状态">
-          <el-select placeholder="请选择订单状态">
-            <el-option label="已完成"></el-option>
-            <el-option label="未支付"></el-option>
-            <el-option label="取消订单"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
+      <div class="top_form">
+        <el-form inline="true">
+          <el-form-item label="就诊人">
+            <el-select placeholder="请选择就诊人" v-model="patientId" @change="changeUser">
+              <el-option v-for="item in patientList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="订单状态">
+            <el-select placeholder="请选择订单状态" v-model="orderStatus" @change="changeOrderStatus">
+              <el-option v-for="(item, index) in orderStatusList" :key="index" :label="item.comment"
+                :value="item.status"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <el-button type="primary" @click="refresh">全部</el-button>
+      </div>
       <el-table border :data="allOrderArr">
         <el-table-column label="就诊时间" align="center" prop="reserveDate"></el-table-column>
         <el-table-column label="医院" align="center" prop="hosname"></el-table-column>
@@ -30,73 +30,99 @@
         <el-table-column label="服务费" align="center" prop="amount"></el-table-column>
         <el-table-column label="就诊人" align="center" prop="patientName"></el-table-column>
         <el-table-column label="订单状态" align="center" prop="param.orderStatusString">
-          <template #="{row}">
+          <template #="{ row }">
             <!-- 判断param.orderStatusString '已支付'绿色，'预约成功，待支付'蓝色,'取消预约'红色-->
             <!-- <span :style="{ color: row.param.orderStatusString == '已支付' ? 'green' : 'red' }">{{row.param.orderStatusString}}</span> -->
-            <span :style="{ color: row.param.orderStatusString == '已支付' ? 'green' : row.param.orderStatusString == '预约成功，待支付' ? 'blue' : 'red' }">{{row.param.orderStatusString}}</span>
+            <span
+              :style="{ color: row.param.orderStatusString == '已支付' ? 'green' : row.param.orderStatusString == '预约成功，待支付' ? 'blue' : 'red' }">{{
+                row.param.orderStatusString }}</span>
           </template>
         </el-table-column>
+        <el-table-column label="创建时间" align="center" prop="createTime" />
         <el-table-column label="操作">
-          <template #="{row}">
+          <template #="{ row }">
             <el-button type="text" size="mini" @click="goDetail(row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[10, 20, 30, 50]"
-      small="small"
-      :background="true"
-      layout="prev, pager, next, jumper,sizes, total"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+      <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[10, 20, 30, 50]"
+        small="small" :background="true" layout="prev, pager, next, jumper,sizes, total" :total="total"
+        @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import {reqOrderInfo} from '@/api/user'
-import type { OrderInfoResponseData,Records } from '@/api/user/type';
+import { reqOrderInfo, reqPatientList, reqOrderStatus } from '@/api/user'
+import type { OrderInfoResponseData, Records, UserResponseData, AllOrderStateResponseData, UserArr, AllOrderState } from '@/api/user/type';
 
 let router = useRouter()
 let pageNo = ref<number>(1)
-let pageSize = ref<number>(5)
+let pageSize = ref<number>(10)
 let patientId = ref<string>('')
 let orderStatus = ref<string>('')
 let allOrderArr = ref<Records>([])
 let total = ref<number>(0)
-
+let patientList = ref<UserArr>([])
+let orderStatusList = ref<AllOrderState>([])
 onMounted(() => {
   getOrderInfo()
+  getData()
 })
 
-const getOrderInfo = async()=>{
-  let res:OrderInfoResponseData = await reqOrderInfo(pageNo.value,pageSize.value,patientId.value,orderStatus.value)
-  if(res.code==200){
+const getOrderInfo = async () => {
+  let res: OrderInfoResponseData = await reqOrderInfo(pageNo.value, pageSize.value, patientId.value, orderStatus.value)
+  if (res.code == 200) {
     allOrderArr.value = res.data.records
     total.value = res.data.total
   }
 }
-const goDetail = (row:any)=>{
-  router.push({path:'/user/order',query:{orderId:row.id}})
+const goDetail = (row: any) => {
+  router.push({ path: '/user/order', query: { orderId: row.id } })
 }
-const handleCurrentChange = (val:number)=>{
+const handleCurrentChange = (val: number) => {
   pageNo.value = val
   getOrderInfo()
 }
-const handleSizeChange = (val:number)=>{
+const handleSizeChange = (val: number) => {
   pageSize.value = val
+  getOrderInfo()
+}
+const getData = async () => {
+  let res_PatientList: UserResponseData = await reqPatientList()
+  if (res_PatientList.code == 200) {
+    patientList.value = res_PatientList.data
+  }
+  let res_OrderStatus: AllOrderStateResponseData = await reqOrderStatus()
+  if (res_OrderStatus.code == 200) {
+    orderStatusList.value = res_OrderStatus.data
+    console.log('orderStatusList.value', orderStatusList.value)
+  }
+}
+const changeUser = (val: string) => {
+  patientId.value = val
+  getOrderInfo()
+}
+const changeOrderStatus = (val: string) => {
+  orderStatus.value = val
+  getOrderInfo()
+}
+const refresh = () => {
+  patientId.value = ''
+  orderStatus.value = ''
   getOrderInfo()
 }
 </script>
 
 <style scoped lang="scss">
-.el-pagination{
+.el-pagination {
   margin-top: 20px;
+}
+.top_form {
+  display: flex;
+  justify-content: start;
+  align-items: top;
 }
 </style>
