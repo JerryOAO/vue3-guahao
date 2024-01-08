@@ -169,3 +169,21 @@ export type AllOrderState = OrderState[]
 export interface AllOrderStateResponseData extends ResponseData {
   data: AllOrderState;
 }
+
+export interface UpdateUser{
+  id?:string,
+  name: string,
+  certificatesType: string,
+  certficatesNo: string,
+  sex: number,
+  birthdate: string,
+  phone: string,
+  isMarry: number,
+  address: string,
+  contactsName: string,
+  contactsCertificatesType: string,
+  contactsCertificatesNo: string,
+  contactsPhone: string,
+  isInsure: number,
+  addressSelected:[]
+}

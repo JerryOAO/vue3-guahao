@@ -6,6 +6,7 @@ import App from './App.vue'
 import GuahaoTop from '@/components/guahao_top/index.vue'
 import GuahaoBottom from '@/components/guahao_bottom/index.vue'
 import Login from '@/components/login/index.vue'
+import Visitor from '@/components/visitor/index.vue'
 //引入路由
 import router from '@/router/index.ts'
 //引入element-plus
@@ -18,6 +19,7 @@ import 'element-plus/theme-chalk/index.css'
 // 引入字体样式
 import "@/assets/font/font.css"
 import pinia from '@/store'
+import './permisstion'
 
 const app = createApp(App)
 app.use(ElementPlus, { locale: zhCn })
@@ -26,4 +28,5 @@ app.use(pinia)
 app.component('GuahaoTop', GuahaoTop)
 app.component('GuahaoBottom', GuahaoBottom)
 app.component('Login', Login)
+app.component('Visitor', Visitor)
 app.mount('#app')

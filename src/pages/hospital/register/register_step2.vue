@@ -91,7 +91,6 @@
 
 <script setup lang="ts">
 import { Plus } from '@element-plus/icons-vue'
-import Visitor from './visitor.vue'
 import { reqGetUser, reqGetDoctor } from '@/api';
 import { reqSubmitOrder } from '@/api/user'
 import { SubmitOrder } from '@/api/user/type'
@@ -199,21 +198,6 @@ const submitOrder = async () => {
     .item {
       width: 30%;
       margin: 10PX;
-
-      .name {
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .idcard {
-        font-size: 15px;
-        font-weight: bold;
-      }
-
-      .phone {
-        font-size: 15px;
-        font-weight: bold;
-      }
     }
   }
 }</style>

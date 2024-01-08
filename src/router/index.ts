@@ -4,7 +4,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/home',
-    component: () => import('@/pages/home/index.vue')
+    component: () => import('@/pages/home/index.vue'),
+    meta:{
+      title:'首页'
+    }
   },
   {
     path: '/hospital',
@@ -13,22 +16,37 @@ const routes = [
       {
         path: 'register',
         component: () => import('@/pages/hospital/register/index.vue'),
+        meta:{
+          title:'预约挂号'
+        }
       },
       {
         path: 'detail',
         component: () => import('@/pages/hospital/detail/index.vue'),
+        meta:{
+          title:'医院详情'
+        }
       },
       {
         path: 'notice',
         component: () => import('@/pages/hospital/notice/index.vue'),
+        meta:{
+          title:'预约通知'
+        }
       },
       {
         path: 'close',
         component: () => import('@/pages/hospital/close/index.vue'),
+        meta:{
+          title:'停诊信息'
+        }
       },
       {
         path: 'search',
         component: () => import('@/pages/hospital/search/index.vue'),
+        meta:{
+          title:'查询'
+        }
       },
       {
         path:'register_step1',
@@ -54,11 +72,17 @@ const routes = [
     children:[
       {
         path:'certification',
-        component:()=>import('@/pages/user/certification/index.vue')
+        component:()=>import('@/pages/user/certification/index.vue'),
+        meta:{
+          title:'实名认证'
+        }
       },
       {
         path:'order',
-        component:()=>import('@/pages/user/order/index.vue')
+        component:()=>import('@/pages/user/order/index.vue'),
+        meta:{
+          title:'挂号订单'
+        }
       },
       {
         path:'patient',

@@ -3,26 +3,31 @@
     <el-card class="box-card">
       <div class="top">
         <div class="left">
-          <span class="yibao">{{ user.isInsure == 1 ? "医保" : '自费' }}</span>
-          <span class="username">{{user.name}}</span>
+          <span class="yibao">{{ user.isInsure == 1 ? "医保" : "自费" }}</span>
+          <span class="username">{{ user.name }}</span>
         </div>
         <div class="right">
-          <el-button type="primary" size="small" :icon="Edit"></el-button>
+          <el-tooltip  content="添加" placement="top" effect="light">
+            <el-button type="primary" size="small" :icon="Edit" @click="$emit('changeTag')"></el-button>
+          </el-tooltip>
+          <el-tooltip v-if="$route.path=='/user/patient'"  content="删除" placement="top" effect="light">
+            <el-button type="danger" size="small" :icon="Delete"></el-button>
+          </el-tooltip>
         </div>
       </div>
       <div class="bottom">
         <ul>
           <li>证件类型：{{ user.param.certificatesTypeString }}</li>
           <li>证件号码：{{ user.certificatesNo }}</li>
-          <li>用户性别：{{ user.sex==0?'女士':'男士' }}</li>
+          <li>用户性别：{{ user.sex == 0 ? "女士" : "男士" }}</li>
           <li>出生日期：{{ user.birthdate }}</li>
           <li>手机号码：{{ user.phone }}</li>
-          <li>婚姻状况：{{ user.isMarry==0?'未婚':'已婚' }}</li>
+          <li>婚姻状况：{{ user.isMarry == 0 ? "未婚" : "已婚" }}</li>
           <li>当前住址：{{ user.param.cityString }}</li>
           <li>详细地址：{{ user.param.fullAddress }}</li>
         </ul>
         <transition name="select">
-          <div class="select" v-if="index===currentIndex">已选择</div>
+          <div class="select" v-if="index === currentIndex">已选择</div>
         </transition>
       </div>
     </el-card>
@@ -30,11 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { Edit } from '@element-plus/icons-vue'
-// 接收父组件传递的就诊人信息
-defineProps(['user','index','currentIndex'])
-
-
+import { Edit, Delete } from "@element-plus/icons-vue";
+defineProps(["user", "index", "currentIndex"]);// 接收父组件传递的就诊人信息
+let $emit = defineEmits(["changeTag"]);// 向父组件传递tag值
 </script>
 
 <style scoped lang="scss">
@@ -71,18 +74,12 @@ defineProps(['user','index','currentIndex'])
         margin-left: 5px;
       }
     }
-
-    .right {
-      .el-button {
-        background-color: #409EFF;
-        border-color: #409EFF;
-      }
-    }
   }
 
   .bottom {
     position: relative;
     z-index: 99;
+
     ul {
       display: flex;
       flex-direction: column;
@@ -101,8 +98,9 @@ defineProps(['user','index','currentIndex'])
         }
       }
     }
+
     // .select居中
-    .select{
+    .select {
       position: absolute;
       width: 150px;
       height: 150px;
@@ -121,17 +119,20 @@ defineProps(['user','index','currentIndex'])
       margin-left: -75px;
       margin-top: -75px;
     }
-    .select-enter-from{
+
+    .select-enter-from {
       opacity: 0;
     }
+
     .select-enter-active,
     .select-leave-active {
       transition: all 0.5s;
     }
+
     .select-enter,
     .select-leave-to {
       opacity: 0;
     }
-    
   }
-}</style>
+}
+</style>

@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import type { SubmitOrder,OrderResponseData,QrcodeResponseData,PayStatusResponseData,MemberResponseData,CertificatesTypeResponseData,UserParams,OrderInfoResponseData,UserResponseData,AllOrderStateResponseData } from "./type";
+import type { UpdateUser,SubmitOrder,OrderResponseData,QrcodeResponseData,PayStatusResponseData,MemberResponseData,CertificatesTypeResponseData,UserParams,OrderInfoResponseData,UserResponseData,AllOrderStateResponseData } from "./type";
 
 enum API {
   //提交订单 获取订单号接口
@@ -24,6 +24,12 @@ enum API {
   PATIENT_LIST = '/user/patient/auth/findAll',
   //获取订单状态
   ORDER_STATUS = '/order/orderInfo/auth/getStatusList',
+  //获取城市的数据 GET /api/cmn/dict/findByParentId/{parentId}
+  CITY_URL = '/cmn/dict/findByParentId/',
+  //更新就诊人
+  UPDATE_USER = '/user/patient/auth/update',
+  //新增就诊人
+  ADD_USER = '/user/patient/auth/save'
 }
 
 //提交订单
@@ -57,3 +63,15 @@ export const reqOrderInfo = (page: number,limit:number,patientId:string,orderSta
 export const reqPatientList = () => request.get<any,UserResponseData>(API.PATIENT_LIST)
 //获取订单状态
 export const reqOrderStatus = () => request.get<any,AllOrderStateResponseData>(API.ORDER_STATUS)
+
+//获取城市的数据
+export const reqCity = (parentId: string) => request.get<any>(API.CITY_URL + `${parentId}`)
+ 
+//更新就诊人
+export const reqUpdateUser = (data: UpdateUser) => {
+  if(data.id){
+    return request.put<any,any>(API.UPDATE_USER,data)
+  }else{
+    return request.post<any,any>(API.ADD_USER,data)
+  }
+}
